@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
+using Lochat.Infrastructure;
+using Lochat.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,9 +21,20 @@ namespace Lochat.Api
 {
     public class Startup
     {
+        #region Nested Classes 
+        public class ModuleInfo
+        {
+            public string Name { get; set; }
+            public Assembly Assembly { get; set; }
+        }
+        #endregion
+
+        private readonly string[] _modulesNames = { "Lochat.Service", "Lochat.Infrastructure" };
+        private readonly IList<ModuleInfo> _modules;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _modules = new List<ModuleInfo>();
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +48,15 @@ namespace Lochat.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo() {Title = "Lochat Api", Version = "v1"});
             });
+
+            LoadModules();
+
+            services.RegisterServicesOfAssemblies(_modules.Select(e => e.Assembly));
+            services.AddAutoMapper(_modules.Select(e => e.Assembly));
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseLazyLoadingProxies().UseMySql(Configuration.GetConnectionString("DefaultConnection"),
+                    b => Assembly.GetExecutingAssembly()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +84,17 @@ namespace Lochat.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void LoadModules()
+        {
+            AppDomain.CurrentDomain.GetAssemblies().
+                Where(e => _modulesNames.Contains(e.GetName().Name)).ToList().
+                ForEach(e => _modules.Add(new ModuleInfo()
+                {
+                    Assembly = e,
+                    Name = e.GetName().Name
+                }));
         }
     }
 }
