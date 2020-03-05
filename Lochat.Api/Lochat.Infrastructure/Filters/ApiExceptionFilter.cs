@@ -32,7 +32,7 @@ namespace Lochat.Infrastructure.Filters
 
                 context.Result = new JsonResult(new ExceptionResponse() { Code = "NotFoundException", Message = ex.Message });
                 context.Exception = null;
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.NotFound;
             }
 
 
