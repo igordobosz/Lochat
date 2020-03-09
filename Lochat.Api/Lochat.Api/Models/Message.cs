@@ -6,6 +6,7 @@ namespace Lochat.Api.Models
     {
         public string ID { get; set; }
         public User Author { get; set; }
+        public Chatroom Chatroom { get; set; }
         public DateTime CreationTime { get; set; }
     }
 }
