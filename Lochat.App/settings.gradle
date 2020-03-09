@@ -1,0 +1,2 @@
+rootProject.name='lochat-app'
+include ':app'
