@@ -7,6 +7,6 @@ namespace Lochat.Infrastructure.BaseClasses
 {
     public abstract class DtoBase : IDto
     {
-        public abstract long Id { get; set; }
+        public abstract string Id { get; set; }
     }
 }

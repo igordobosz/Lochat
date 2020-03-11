@@ -8,10 +8,4 @@
     <ProjectReference Include="..\Lochat.Infrastructure\Lochat.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Profiles\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

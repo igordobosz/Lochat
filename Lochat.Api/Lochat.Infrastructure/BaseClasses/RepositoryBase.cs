@@ -58,9 +58,9 @@ namespace Lochat.Infrastructure.BaseClasses
             return query;
         }
 
-        public virtual TEntity GetById(long id)
+        public virtual TEntity GetById(string id)
         {
-            var entity = GetQuery().FirstOrDefault(e => e.Id == id);
+            var entity = GetQuery().FirstOrDefault(e => e.Id.Equals(id));
             if (entity == null)
             {
                 throw new NotFoundException("Entity not found.");

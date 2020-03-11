@@ -6,6 +6,6 @@ namespace Lochat.Infrastructure.Interfaces
 {
     public interface IDto
     {
-        long Id { get; set; }
+        string Id { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace Lochat.Infrastructure.BaseClasses
 {
     public abstract class EntityBase : IEntity
     {
-        public abstract long Id { get; set; }
+        public abstract string Id { get; set; }
     }
 }

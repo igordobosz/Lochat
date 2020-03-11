@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Lochat.Infrastructure.BaseClasses
 {
     [ApiController]
+    [Route("[controller]/[action]")]
     [ApiExceptionFilter]
     public abstract class ApiControllerBase : ControllerBase
     {

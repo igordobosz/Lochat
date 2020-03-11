@@ -1,17 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using Lochat.Infrastructure.BaseClasses;
 
-namespace Lochat.Api.Models
+namespace Lochat.Service.Dtos
 {
-    public class Chatroom
+    public class ChatroomDto : DtoBase
     {
-        public string ID { get; set; }
-        public User Owner { get; set; }
+        public override string Id { get; set; }
+        public string Name { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime TerminationTime { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public bool IsDynamic { get; set; }
-        public ICollection<User> BannedUsers { get; set; }
     }
 }

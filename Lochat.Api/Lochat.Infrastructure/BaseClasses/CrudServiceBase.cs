@@ -37,7 +37,7 @@ namespace Lochat.Infrastructure.BaseClasses
             await _baseRepository.Delete(MapToEntity(dto));
         }
 
-        public virtual TDto GetById(long id)
+        public virtual TDto GetById(string id)
         {
             return MapToDto(GetEntityById(id));
         }
@@ -49,7 +49,7 @@ namespace Lochat.Infrastructure.BaseClasses
 
         #endregion
         #region IIntCrudService Members
-        public TEntity GetEntityById(long id)
+        public TEntity GetEntityById(string id)
         {
             return _baseRepository.GetById(id);
         }

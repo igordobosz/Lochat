@@ -12,6 +12,6 @@ namespace Lochat.Infrastructure.Interfaces
         Task<TEntity> Update(TEntity dto);
         Task Delete(TEntity dto);
         IEnumerable<TEntity> Get(QueryModel<TEntity> queryModel = null);
-        TEntity GetById(long id);
+        TEntity GetById(string id);
     }
 }
