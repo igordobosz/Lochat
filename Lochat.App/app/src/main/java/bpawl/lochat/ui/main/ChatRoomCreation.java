@@ -14,25 +14,24 @@ import android.view.ViewGroup;
 
 import bpawl.lochat.R;
 
-public class MainFragment extends Fragment {
+public class ChatRoomCreation extends Fragment {
 
-    private MainViewModel mViewModel;
+    private ChatRoomCreationViewModel mViewModel;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static ChatRoomCreation newInstance() {
+        return new ChatRoomCreation();
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_fragment, container, false);
+        return inflater.inflate(R.layout.chat_room_creation_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ChatRoomCreationViewModel.class);
         // TODO: Use the ViewModel
     }
 
