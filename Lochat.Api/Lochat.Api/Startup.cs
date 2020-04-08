@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
+using Google.Apis.Auth;
+using Lochat.Api.Options;
 using Lochat.Infrastructure;
 using Lochat.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -57,6 +59,9 @@ namespace Lochat.Api
             services.AddDbContext<AppDbContext>(options =>
                 options.UseLazyLoadingProxies().UseMySql(Configuration.GetConnectionString("DefaultConnection"),
                     b => Assembly.GetExecutingAssembly()));
+
+            services.AddOptions();
+            services.Configure<AuthenticationOptions>(Configuration.GetSection(OptionsSectionTypes.Authentication));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

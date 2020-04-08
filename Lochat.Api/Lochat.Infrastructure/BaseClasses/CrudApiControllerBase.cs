@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Lochat.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lochat.Infrastructure.BaseClasses
 {
+    [Authorize]
     public abstract class CrudApiControllerBase<TEntity, TDto> : ApiControllerBase where TEntity : class, IEntity where TDto : IDto
     {
         protected readonly ICrudService<TEntity, TDto> _baseService;
