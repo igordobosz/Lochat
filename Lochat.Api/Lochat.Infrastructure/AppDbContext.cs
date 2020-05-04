@@ -24,7 +24,8 @@ namespace Lochat.Infrastructure
             modelBuilder.Entity<Message>().HasOne(m => m.Chatroom).WithMany(m => m.Messages)
                 .HasForeignKey(k => k.ChatroomId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Message>().HasOne(m => m.Author).WithMany(m => m.Messages)
-                .HasForeignKey(k => k.AuthorId).OnDelete(DeleteBehavior.Cascade); 
+                .HasForeignKey(k => k.AuthorId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>().HasIndex(e => e.Email).IsUnique();
         }
     }
 }

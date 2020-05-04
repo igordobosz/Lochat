@@ -7,7 +7,8 @@ namespace Lochat.Service.Dtos
 {
     public class UserDto : DtoBase
     {
-        public override string Id { get; set; } // Phone ID might be used as a key, if not - add another property for it
+        public override string Id { get; set; }
         public string Username { get; set; }
+        public string Email { get; set; }
     }
 }

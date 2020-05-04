@@ -20,6 +20,10 @@ namespace Lochat.Infrastructure.BaseClasses
 
         public virtual async Task<TEntity> Create(TEntity entity)
         {
+	        if (string.IsNullOrEmpty(entity.Id))
+	        {
+		        entity.Id = Guid.NewGuid().ToString();
+	        }
             _dbContext.Add(entity);
             await _dbContext.SaveChangesAsync();
             return GetById(entity.Id);
@@ -37,7 +41,7 @@ namespace Lochat.Infrastructure.BaseClasses
 
         public virtual async Task Delete(TEntity entity)
         {
-            var oldEntity = GetQuery().FirstOrDefault(e => e.Id == entity.Id);
+            var oldEntity = GetQuery().FirstOrDefault(e => e.Id.Equals(entity.Id));
             if (oldEntity == null)
             {
                 throw new NotFoundException("Entity not found");
@@ -49,13 +53,14 @@ namespace Lochat.Infrastructure.BaseClasses
 
         public virtual IEnumerable<TEntity> Get(QueryModel<TEntity> queryModel = null)
         {
-            var query = GetQuery().ToList();
-            if (queryModel != null)
-            {
-                query = query.Where(queryModel.Condition).ToList();
-            }
-
-            return query;
+	        if (queryModel != null)
+	        {
+		        return GetQuery().Where(queryModel.Condition);
+	        }
+	        else
+	        {
+		        return GetQuery();
+	        }
         }
 
         public virtual TEntity GetById(string id)

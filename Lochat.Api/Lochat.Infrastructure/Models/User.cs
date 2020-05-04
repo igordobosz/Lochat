@@ -6,9 +6,9 @@ namespace Lochat.Infrastructure.Models
 {
     public class User : EntityBase   
     {
-        public override string Id { get; set; } // Phone ID might be used as a key, if not - add another property for it
+        public override string Id { get; set; }
         public string Username { get; set; }
-//        public virtual ICollection<User> Blacklist { get; set; }
+        public string Email { get; set; }
         public virtual ICollection<Chatroom> Chatrooms { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
     }
