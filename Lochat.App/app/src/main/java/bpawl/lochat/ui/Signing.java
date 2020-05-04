@@ -1,5 +1,7 @@
 package bpawl.lochat.ui.main;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -12,11 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import bpawl.lochat.R;
+import bpawl.lochat.databinding.SigningFragmentBinding;
 
 public class Signing extends Fragment {
 
-    private SigningViewModel mViewModel;
+    public SigningViewModel viewModel;
 
     public static Signing newInstance() {
         return new Signing();
@@ -25,14 +30,16 @@ public class Signing extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.signing_fragment, container, false);
+        final SigningFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.signing_fragment, container, false);
+        viewModel = ViewModelProviders.of(this).get(SigningViewModel.class);
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(this);
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(SigningViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 }
