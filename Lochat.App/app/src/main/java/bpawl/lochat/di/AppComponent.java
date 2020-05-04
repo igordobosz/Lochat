@@ -1,4 +1,4 @@
-package bpawl.lochat;
+package bpawl.lochat.di;
 
 import bpawl.lochat.ui.Signing;
 import bpawl.lochat.viewmodels.SigningViewModel;

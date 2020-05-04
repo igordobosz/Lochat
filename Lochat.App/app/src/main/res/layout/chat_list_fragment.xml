@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.Profile"
+    tools:context=".ui.Profile"
     android:orientation="vertical"
     android:background="@color/colorBackground"
     android:padding="20dp">
@@ -14,13 +14,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/textColorSecondary"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/lochatlogo"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -51,7 +51,7 @@
             android:gravity="right"
             android:textSize="20dp"
             android:text="50m"
-            android:textColor="@color/textColorPrimary"/>
+            android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
 
@@ -60,13 +60,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/textColorSecondary"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/lochatlogo"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -97,7 +97,7 @@
             android:gravity="right"
             android:textSize="20dp"
             android:text="50m"
-            android:textColor="@color/textColorPrimary"/>
+            android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
 
@@ -106,13 +106,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/textColorSecondary"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/lochatlogo"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -143,16 +143,16 @@
             android:gravity="right"
             android:textSize="20dp"
             android:text="50m"
-            android:textColor="@color/textColorPrimary"/>
+            android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+   <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:contentDescription="add"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp" />-->
 
 </LinearLayout>

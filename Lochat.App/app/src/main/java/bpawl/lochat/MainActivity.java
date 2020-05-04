@@ -4,8 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import bpawl.lochat.ui.main.ChatMap;
-import bpawl.lochat.ui.main.Signing;
+import bpawl.lochat.ui.Signing;
 
 public class MainActivity extends AppCompatActivity {
 

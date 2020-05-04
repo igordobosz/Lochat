@@ -1,4 +1,4 @@
-package bpawl.lochat;
+package bpawl.lochat.di;
 
 import android.app.Application;
 
@@ -6,13 +6,10 @@ import bpawl.lochat.Services.ISampleService;
 import bpawl.lochat.Services.SampleService;
 import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
 @Module
-public class AppModule {
+public abstract class AppModule {
 
-    @Provides
-    public ISampleService provideSampleService() {
-        return new SampleService();
-    }
+    @Binds
+    public abstract ISampleService bindSampleService(SampleService service);
 }

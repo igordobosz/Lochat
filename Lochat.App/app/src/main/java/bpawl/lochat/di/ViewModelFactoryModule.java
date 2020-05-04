@@ -1,4 +1,15 @@
 package bpawl.lochat.di;
 
-public class ViewModelFactoryModule {
+import androidx.lifecycle.ViewModelProvider;
+
+import bpawl.lochat.viewmodels.ViewModelProviderFactory;
+import dagger.Binds;
+import dagger.Module;
+
+
+@Module
+public abstract class ViewModelFactoryModule {
+
+    @Binds
+    public abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelProviderFactory viewModelFactory);
 }

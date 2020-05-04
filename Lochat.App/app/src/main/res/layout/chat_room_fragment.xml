@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.ChatRoom"
+    tools:context=".ui.ChatRoom"
     android:orientation="vertical"
     android:background="@color/colorBackground"
     android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -48,14 +47,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:text="68 min."
-            android:textColor="@color/colorComplementary"
+            android:textColor="@color/colorPrimary"
             android:gravity="center"/>
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:text="Delete"
+            android:textColor="@color/textColorPrimary"
+            android:background="@color/colorAccent"
             android:visibility="visible"/>
 
         </LinearLayout>
@@ -63,7 +64,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:layout_marginVertical="10dp"/>
 
     </LinearLayout>
@@ -193,11 +194,19 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"/>
+            android:layout_weight="0.8"
+            android:hint="Wprowadź wiadomość"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.2"
+            android:text="SEND"
+            android:textColor="@color/colorBackground"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

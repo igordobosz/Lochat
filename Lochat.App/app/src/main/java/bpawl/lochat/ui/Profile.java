@@ -1,4 +1,4 @@
-package bpawl.lochat.ui.main;
+package bpawl.lochat.ui;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import bpawl.lochat.R;
+import bpawl.lochat.viewmodels.ProfileViewModel;
 
 public class Profile extends Fragment {
 

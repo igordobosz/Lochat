@@ -3,7 +3,8 @@
 
     <string name="signing_label">Wprowadź swój pseudonim</string>
     <string name="signing_button">Zapisz</string>
-    <string name="signing_incorrect_login">Pseudonim musi zawierać od 3 do 20 znaków.</string>
+    <string name="signing_incorrect_login">Pseudonim powinien zawierać jedynie litery i liczby</string>
+    <string name="signing_username_length">%d / %d</string>
 
     <string name="creation_label">Wprowadź nazwę czatu</string>
     <string name="creation_button">Utwórz</string>

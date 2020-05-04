@@ -1,4 +1,4 @@
-package bpawl.lochat.ui.main;
+package bpawl.lochat.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 

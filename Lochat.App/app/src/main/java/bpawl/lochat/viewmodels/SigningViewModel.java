@@ -1,21 +1,21 @@
-package bpawl.lochat.ui.main;
+package bpawl.lochat.viewmodels;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
 import bpawl.lochat.Services.ISampleService;
 
-public class SigningViewModel extends AndroidViewModel {
+public class SigningViewModel extends ViewModel {
     private static final String SP_KEY = "lochat-user-data";
     private static final String USERNAME_KEY = "user-name";
 
@@ -32,9 +32,9 @@ public class SigningViewModel extends AndroidViewModel {
     private ISampleService _sampleService;
 
     @Inject
-    public SigningViewModel(@NonNull Application application, ISampleService sampleService) {
-        super(application);
-        _sp = application.getSharedPreferences(SP_KEY, Context.MODE_PRIVATE);
+    public SigningViewModel(ISampleService sampleService, SharedPreferences preferences) {
+        super();
+        _sp = preferences;
 
         _userName = new MutableLiveData<String>(_getUserNameFromStorage());
 
