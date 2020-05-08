@@ -1,85 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.Signing"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary"
-    android:padding="20dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:layout_marginVertical="20dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/lochatlogo"/>
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="bpawl.lochat.viewmodels.ChatRoomCreationViewModel" />
+    </data>
 
-    <EditText
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/creation_label"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/colorAccent"
-        android:textColorHint="@color/colorAccent"
-        android:backgroundTint="@color/colorAccent"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="4dp">
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:context=".ui.Signing">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Czas trwania"
-            android:textColor="@color/colorAccent"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginVertical="20dp"
+            android:src="@drawable/lochatlogo" />
 
-        <Spinner
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"/>
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/creation_label"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="4dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Zasięg"
-            android:textColor="@color/colorAccent"/>
-
-        <Spinner
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"/>
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Czas trwania"
+                android:textColor="@color/colorAccent" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zasięg"
+                android:textColor="@color/colorAccent" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorAccent"
+            android:text="@string/creation_button"
+            android:textColor="@color/textColorPrimary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:text="@string/creation_incorrect_name"
+            android:textColor="@color/colorAccentDark"
+            android:visibility="visible" />
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/creation_button"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/textColorPrimary"
-        android:background="@color/colorAccent"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/creation_incorrect_name"
-        android:textColor="@color/colorAccentDark"
-        android:visibility="visible"
-        android:layout_marginHorizontal="4dp"/>
-
-</LinearLayout>
+</layout>

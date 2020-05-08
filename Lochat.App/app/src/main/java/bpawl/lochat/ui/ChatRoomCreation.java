@@ -1,23 +1,19 @@
 package bpawl.lochat.ui;
 
-import androidx.lifecycle.ViewModelProviders;
-
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import bpawl.lochat.R;
+import bpawl.lochat.databinding.ChatRoomCreationFragmentBinding;
 import bpawl.lochat.viewmodels.ChatRoomCreationViewModel;
+import bpawl.lochat.viewmodels.LochatViewModel;
 
-public class ChatRoomCreation extends Fragment {
-
-    private ChatRoomCreationViewModel mViewModel;
+public class ChatRoomCreation extends LochatFragment {
+    private ChatRoomCreationViewModel viewModel;
 
     public static ChatRoomCreation newInstance() {
         return new ChatRoomCreation();
@@ -26,14 +22,15 @@ public class ChatRoomCreation extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.chat_room_creation_fragment, container, false);
+        final ChatRoomCreationFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.chat_room_creation_fragment, container, false);
+        viewModel = (ChatRoomCreationViewModel) _resolveViewModel(ChatRoomCreationViewModel.class);
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ChatRoomCreationViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    protected void _initViewModel(LochatViewModel viewModel) {
 
+    }
 }

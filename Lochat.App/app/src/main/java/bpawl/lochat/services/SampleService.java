@@ -1,4 +1,4 @@
-package bpawl.lochat.Services;
+package bpawl.lochat.services;
 
 public class SampleService implements ISampleService {
     @Override

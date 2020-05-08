@@ -1,72 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
-        <import type="android.view.View"/>
-        <variable name="viewModel"
-                  type="bpawl.lochat.viewmodels.SigningViewModel" />
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="bpawl.lochat.viewmodels.SigningViewModel" />
     </data>
-<LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.Signing"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary"
-    android:padding="20dp">
 
-    <ImageView
-        android:layout_marginVertical="20dp"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/lochatlogo"/>
-
-    <EditText
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/signing_label"
-        android:textColor="@color/colorAccent"
-        android:textColorHint="@color/colorAccent"
-        android:backgroundTint="@color/colorAccent"
-        android:inputType="text"
-        android:maxLines="1"
-        android:text="@={viewModel.userName}"/>
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:context=".ui.Signing">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="4dp">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginVertical="20dp"
+            android:src="@drawable/lochatlogo" />
 
-        <TextView
-            android:layout_width="0dp"
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.85"
-            android:text="@string/signing_incorrect_login"
-            android:textColor="@color/colorAccentDark"
-            android:visibility="@{viewModel.hasUserNameInvalidCharacters ? View.VISIBLE : View.GONE}"/>
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/signing_label"
+            android:inputType="text"
+            android:maxLines="1"
+            android:text="@={viewModel.userName}"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/colorAccent" />
 
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.15"
-            android:gravity="right"
-            android:text="@{String.format(@string/signing_username_length, viewModel.userName.length(), viewModel.maxUserNameLength)}"
-            android:textColor="@drawable/valid_text_fg"
-            android:enabled="@{!viewModel.hasUserNameInvalidLength}"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.85"
+                android:text="@string/signing_incorrect_login"
+                android:textColor="@color/colorAccentDark"
+                android:visibility="@{viewModel.hasUserNameInvalidCharacters ? View.VISIBLE : View.GONE}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.15"
+                android:enabled="@{!viewModel.hasUserNameInvalidLength}"
+                android:gravity="right"
+                android:text="@{String.format(@string/signing_username_length, viewModel.userName.length(), viewModel.maxUserNameLength)}"
+                android:textColor="@drawable/valid_text_fg" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/primary_button_bg"
+            android:enabled="@{viewModel.isUserNameValid}"
+            android:onClick="@{() -> viewModel.saveUsername()}"
+            android:text="@string/signing_button"
+            android:textColor="@color/textColorPrimary" />
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:text="@string/signing_button"
-        android:textColor="@color/textColorPrimary"
-        android:background="@drawable/primary_button_bg"
-        android:enabled="@{viewModel.isUserNameValid}"
-        android:onClick="@{() -> viewModel.saveUsername()}"/>
-
-</LinearLayout>
 </layout>

@@ -1,188 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.Profile"
-    android:orientation="vertical"
-    android:background="@color/colorBackground"
-    android:padding="20dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="bpawl.lochat.viewmodels.ProfileViewModel" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical"
+        android:padding="20dp"
+        tools:context=".ui.Profile">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pseudonim"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="#000001"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Pseudonim"
-                android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:text="#000001"
-                android:textColor="@color/textColorSecondary"/>
+                android:layout_weight="0.2"
+                android:text="Edit" />
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="Edit"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorPrimary"
-        android:layout_marginVertical="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="20dp">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/lochatlogo"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/colorPrimary" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/lochatlogo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nazwa czatu"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="15 online | 50 min."
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Nazwa czatu"
-                android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:text="15 online | 50 min."
-                android:textColor="@color/textColorSecondary"/>
+                android:layout_weight="0.2"
+                android:background="@color/colorAccent"
+                android:text="Delete"
+                android:textColor="@color/textColorPrimary" />
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="Delete"
-            android:textColor="@color/textColorPrimary"
-            android:background="@color/colorAccent"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="20dp">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/lochatlogo"/>
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/lochatlogo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nazwa czatu"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="15 online | 2 godz."
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Nazwa czatu"
-                android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:text="15 online | 2 godz."
-                android:textColor="@color/textColorSecondary"/>
+                android:layout_weight="0.2"
+                android:background="@color/colorAccent"
+                android:text="Delete"
+                android:textColor="@color/textColorPrimary" />
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="Delete"
-            android:textColor="@color/textColorPrimary"
-            android:background="@color/colorAccent"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="20dp">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/lochatlogo"/>
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/lochatlogo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nazwa czatu"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="15 online | 1 dzień"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="Nazwa czatu"
-                android:textColor="@color/textColorPrimary"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:text="15 online | 1 dzień"
-                android:textColor="@color/textColorSecondary"/>
+                android:layout_weight="0.2"
+                android:background="@color/colorAccent"
+                android:text="Delete"
+                android:textColor="@color/textColorPrimary" />
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:text="Delete"
-            android:textColor="@color/textColorPrimary"
-            android:background="@color/colorAccent"/>
-
     </LinearLayout>
-
-</LinearLayout>
+</layout>

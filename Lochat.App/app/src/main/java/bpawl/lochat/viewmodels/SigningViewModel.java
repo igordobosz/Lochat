@@ -1,41 +1,30 @@
 package bpawl.lochat.viewmodels;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-
 import javax.inject.Inject;
 
-import bpawl.lochat.Services.ISampleService;
+public class SigningViewModel extends LochatViewModel {
 
-public class SigningViewModel extends ViewModel {
-    private static final String SP_KEY = "lochat-user-data";
     private static final String USERNAME_KEY = "user-name";
 
     private int _minUserNameLength = 3;
     private int _maxUserNameLength = 20;
 
-    private SharedPreferences _sp;
 
     private MutableLiveData<String> _userName;
     private MediatorLiveData<Boolean> _hasUserNameInvalidCharacters;
     private MediatorLiveData<Boolean> _hasUserNameInvalidLength;
     private MediatorLiveData<Boolean> _isUserNameValid;
 
-    private ISampleService _sampleService;
-
     @Inject
-    public SigningViewModel(ISampleService sampleService, SharedPreferences preferences) {
-        super();
-        _sp = preferences;
+    public SharedPreferences sp;
 
+    @Override
+    public void init() {
         _userName = new MutableLiveData<String>(_getUserNameFromStorage());
 
         _isUserNameValid = new MediatorLiveData<Boolean>();
@@ -61,20 +50,23 @@ public class SigningViewModel extends ViewModel {
                 _hasUserNameInvalidLength.setValue(_hasInvalidLength(s));
             }
         });
-
-        _sampleService = sampleService;
-        _maxUserNameLength = _sampleService.getValue();
     }
 
-    public MutableLiveData<String> getUserName() { return _userName; }
+    public MutableLiveData<String> getUserName() {
+        return _userName;
+    }
 
     public LiveData<Boolean> getIsUserNameValid() {
         return _isUserNameValid;
     }
 
-    public LiveData<Boolean> getHasUserNameInvalidCharacters() { return _hasUserNameInvalidCharacters; }
+    public LiveData<Boolean> getHasUserNameInvalidCharacters() {
+        return _hasUserNameInvalidCharacters;
+    }
 
-    public LiveData<Boolean> getHasUserNameInvalidLength() { return _hasUserNameInvalidLength; }
+    public LiveData<Boolean> getHasUserNameInvalidLength() {
+        return _hasUserNameInvalidLength;
+    }
 
     public int getMinUserNameLength() {
         return _minUserNameLength;
@@ -91,11 +83,11 @@ public class SigningViewModel extends ViewModel {
     }
 
     private String _getUserNameFromStorage() {
-        return _sp.getString(USERNAME_KEY, "");
+        return sp.getString(USERNAME_KEY, "");
     }
 
     private void _saveUserNameInStorage() {
-        SharedPreferences.Editor editor = _sp.edit();
+        SharedPreferences.Editor editor = sp.edit();
         editor.putString(USERNAME_KEY, _userName.getValue());
         editor.commit();
     }

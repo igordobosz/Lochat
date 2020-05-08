@@ -1,23 +1,19 @@
 package bpawl.lochat.ui;
 
-import androidx.lifecycle.ViewModelProviders;
-
+import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import bpawl.lochat.R;
+import bpawl.lochat.databinding.ChatMapFragmentBinding;
 import bpawl.lochat.viewmodels.ChatMapViewModel;
+import bpawl.lochat.viewmodels.LochatViewModel;
 
-public class ChatMap extends Fragment {
-
-    private ChatMapViewModel mViewModel;
+public class ChatMap extends LochatFragment {
+    private ChatMapViewModel viewModel;
 
     public static ChatMap newInstance() {
         return new ChatMap();
@@ -26,14 +22,15 @@ public class ChatMap extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.chat_map_fragment, container, false);
+        final ChatMapFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.chat_map_fragment, container, false);
+        viewModel = (ChatMapViewModel) _resolveViewModel(ChatMapViewModel.class);
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ChatMapViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    protected void _initViewModel(LochatViewModel viewModel) {
 
+    }
 }
