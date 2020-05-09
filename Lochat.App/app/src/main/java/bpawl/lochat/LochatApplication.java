@@ -1,11 +1,9 @@
 package bpawl.lochat;
 
 import android.app.Application;
-
 import bpawl.lochat.di.AndroidToolsModule;
 import bpawl.lochat.di.AppComponent;
 import bpawl.lochat.di.DaggerAppComponent;
-import bpawl.lochat.di.ServicesModule;
 
 public class LochatApplication extends Application {
     public AppComponent appComponent;

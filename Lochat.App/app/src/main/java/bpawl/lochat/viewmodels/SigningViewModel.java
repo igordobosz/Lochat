@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import javax.inject.Inject;
 
+import bpawl.lochat.services.IFragmentNavigation;
+import bpawl.lochat.ui.Profile;
+
 public class SigningViewModel extends LochatViewModel {
 
     private static final String USERNAME_KEY = "user-name";
@@ -22,6 +25,9 @@ public class SigningViewModel extends LochatViewModel {
 
     @Inject
     public SharedPreferences sp;
+
+    @Inject
+    public IFragmentNavigation fragmentNavigation;
 
     @Override
     public void init() {
@@ -79,6 +85,7 @@ public class SigningViewModel extends LochatViewModel {
     public void saveUsername() {
         if (_isUserNameValid.getValue()) {
             _saveUserNameInStorage();
+            fragmentNavigation.navigateToFragment(Profile.class.getName());
         }
     }
 

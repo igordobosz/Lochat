@@ -9,6 +9,7 @@ import dagger.Provides;
 @Module
 public class AndroidToolsModule {
     private Application _app;
+
     private static final String SP_KEY = "lochat-user-data";
 
     public AndroidToolsModule(Application app) {

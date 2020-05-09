@@ -23,6 +23,6 @@ public abstract class LochatFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        _lochatApp = (LochatApplication) (getActivity().getApplication());
+        _lochatApp = (LochatApplication) getActivity().getApplication();
     }
 }
