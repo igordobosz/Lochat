@@ -14,7 +14,7 @@ namespace Lochat.Service.Services
     public interface IUserService : ICrudService<User, UserDto>
     {
 	    UserDto GetByEmail(string email);
-	    Task<UserDto> InsertOrUpdate(UserDto dto);
+	    Task<UserDto> Register(string email);
     }
     public class UserService : CrudService<User, UserDto>, IUserService
     {
@@ -28,16 +28,16 @@ namespace Lochat.Service.Services
 	        return _baseRepository.Get(new QueryModel<User>() { Condition = user => user.Email.Equals(email) }).Select(MapToDto).FirstOrDefault();
         }
 
-        public async Task<UserDto> InsertOrUpdate(UserDto dto)
+        public async Task<UserDto> Register(string email)
         {
-	        if (GetByEmail(dto.Email) != default(UserDto))
-	        {
-		        return await Update(GetByEmail(dto.Email));
-            }
-	        else
-	        {
-		        return await Create(dto);
+	        var user = GetByEmail(email);
+
+            if (user == default(UserDto))
+            {
+	            return await Create(new UserDto() { Email = email, Username = email });
 	        }
+
+	        return user;
         }
     }
 }
