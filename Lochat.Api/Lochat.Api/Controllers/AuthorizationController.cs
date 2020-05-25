@@ -34,7 +34,7 @@ namespace Lochat.Api.Controllers
 				{
 					Audience = new[] {_authenticationOptions.ClientId}
 				});
-				var user = await _userService.InsertOrUpdate(new UserDto() {Email = authResult.Email, Username = authResult.Email});
+				var user = await _userService.Register(authResult.Email);
 
 				return Ok(
 					new AuthenticateResponse()
