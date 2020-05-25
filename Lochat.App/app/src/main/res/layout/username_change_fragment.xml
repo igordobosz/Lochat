@@ -5,7 +5,7 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="bpawl.lochat.viewmodels.SigningViewModel" />
+            type="bpawl.lochat.viewmodels.UsernameChangeViewModel" />
     </data>
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +15,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp"
-        tools:context=".ui.Signing">
+        tools:context=".ui.UsernameChange">
 
         <ImageView
             android:layout_width="200dp"

@@ -64,8 +64,10 @@ public class FragmentNavigation implements IFragmentNavigation {
     }
 
     private void _commitFragmentNavigation(String normalisedName) {
+        LochatFragment navigationTarget = _availableFragments.get(normalisedName);
         _fragmentManager.beginTransaction()
-                .replace(_containerID, _availableFragments.get(normalisedName))
+                .replace(_containerID, navigationTarget)
                 .commitNow();
+        navigationTarget.onNavigatedTo();
     }
 }

@@ -4,7 +4,8 @@ import javax.inject.Singleton;
 
 import bpawl.lochat.LochatActivity;
 import bpawl.lochat.LochatApplication;
-import bpawl.lochat.viewmodels.SigningViewModel;
+import bpawl.lochat.viewmodels.ProfileViewModel;
+import bpawl.lochat.viewmodels.UsernameChangeViewModel;
 import dagger.Component;
 
 @Singleton
@@ -12,5 +13,6 @@ import dagger.Component;
 public interface AppComponent {
     void inject(LochatApplication application);
     void inject(LochatActivity lochatActivity);
-    void inject(SigningViewModel signingViewModel);
+    void inject(UsernameChangeViewModel usernameChangeViewModel);
+    void inject(ProfileViewModel profileViewModel);
 }
