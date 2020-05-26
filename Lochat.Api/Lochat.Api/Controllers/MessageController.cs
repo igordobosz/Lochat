@@ -6,11 +6,12 @@ using Lochat.Infrastructure.BaseClasses;
 using Lochat.Infrastructure.Interfaces;
 using Lochat.Infrastructure.Models;
 using Lochat.Service.Dtos;
+using Lochat.Service.QueryModels;
 using Lochat.Service.Services;
 
 namespace Lochat.Api.Controllers
 {
-    public class MessageController : CrudApiControllerBase<Message, MessageDto, QueryModelBase>
+    public class MessageController : CrudApiControllerBase<Message, MessageDto, MessageQueryModel>
     {
         public MessageController(IMessageService baseService) : base(baseService)
         {

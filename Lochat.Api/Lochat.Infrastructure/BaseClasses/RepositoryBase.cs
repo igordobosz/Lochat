@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Lochat.Infrastructure.Exceptions;
@@ -51,7 +52,7 @@ namespace Lochat.Infrastructure.BaseClasses
             await _dbContext.SaveChangesAsync();
         }
 
-        public virtual IEnumerable<TEntity> Get(Func<TEntity, bool> queryFunc = null)
+        public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> queryFunc = null)
         {
 	        if (queryFunc != null)
 	        {

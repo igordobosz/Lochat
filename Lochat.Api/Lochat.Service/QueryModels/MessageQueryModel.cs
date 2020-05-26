@@ -5,8 +5,8 @@ using Lochat.Infrastructure.BaseClasses;
 
 namespace Lochat.Service.QueryModels
 {
-	public class UserQueryModel : QueryModelBase
+	public class MessageQueryModel : QueryModelBase
 	{
-		public string Email { get; set; }
+		public string AuthorId { get; set; }
 	}
 }

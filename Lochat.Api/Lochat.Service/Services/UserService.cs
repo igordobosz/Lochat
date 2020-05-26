@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -38,9 +39,16 @@ namespace Lochat.Service.Services
 	        return user;
         }
 
-        protected override Func<User, bool> ConvertQueryModelToFunc(UserQueryModel model)
-        {
-	        return user => user.Email.Equals(model.Email);
+	    protected override Expression<Func<User, bool>> ConvertQueryModelToFunc(UserQueryModel model)
+		{
+	        var pred = base.ConvertQueryModelToFunc(model);
+	        if (!string.IsNullOrEmpty(model.Email))
+	        {
+		        Expression<Func<User, bool>> expr = user => user.Email.Equals(model.Email);
+		        pred = Expression.Lambda<Func<User, bool>>(Expression.And(pred, expr));
+	        }
+
+	        return pred;
         }
     }
 }

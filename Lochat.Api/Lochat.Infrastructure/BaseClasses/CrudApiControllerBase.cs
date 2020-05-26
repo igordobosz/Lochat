@@ -40,5 +40,11 @@ namespace Lochat.Infrastructure.BaseClasses
         {
             return _baseService.GetById(id);
         }
+
+        [HttpPost]
+        public IEnumerable<TDto> Get(TQueryModel model)
+        {
+	        return _baseService.Get(model);
+        }
     }
 }
