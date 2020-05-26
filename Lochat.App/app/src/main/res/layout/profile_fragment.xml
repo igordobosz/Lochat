@@ -22,34 +22,20 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Pseudonim"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="#000001"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="14dp" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="@{viewModel.getUsername()}"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="24dp" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:text="Edit" />
+                android:layout_weight="0.3"
+                android:onClick="@{() -> viewModel.changeUsername()}"
+                android:text="Zmień" />
 
         </LinearLayout>
 
@@ -59,143 +45,20 @@
             android:layout_marginVertical="10dp"
             android:background="@color/colorPrimary" />
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/userChatRooms"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="20dp"/>
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/lochatlogo" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nazwa czatu"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="15 online | 50 min."
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="14dp" />
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:background="@color/colorAccent"
-                android:text="Delete"
-                android:textColor="@color/textColorPrimary" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <Button
             android:layout_width="match_parent"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/lochatlogo" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nazwa czatu"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="15 online | 2 godz."
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="14dp" />
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:background="@color/colorAccent"
-                android:text="Delete"
-                android:textColor="@color/textColorPrimary" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/lochatlogo" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.6"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nazwa czatu"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="15 online | 1 dzień"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="14dp" />
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:background="@color/colorAccent"
-                android:text="Delete"
-                android:textColor="@color/textColorPrimary" />
-
-        </LinearLayout>
+            android:onClick="@{() -> viewModel.createChatRoom()}"
+            android:text="Utwórz czat" />
 
     </LinearLayout>
 </layout>

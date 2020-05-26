@@ -38,26 +38,18 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nazwa czatu"
+                        android:text="@{viewModel.getChatName()}"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="20dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="15 online"
+                        android:text="@{viewModel.getRemainingTime()}"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="14dp" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:gravity="center"
-                    android:text="68 min."
-                    android:textColor="@color/colorPrimary" />
 
                 <Button
                     android:layout_width="0dp"
@@ -65,6 +57,7 @@
                     android:layout_weight="0.2"
                     android:background="@color/colorAccent"
                     android:text="Delete"
+                    android:onClick="@{() -> viewModel.deleteChatRoom()}"
                     android:textColor="@color/textColorPrimary"
                     android:visibility="visible" />
 
@@ -75,132 +68,20 @@
                 android:layout_height="1dp"
                 android:layout_marginVertical="10dp"
                 android:background="@color/colorPrimary" />
-
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/chatMessages"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="20dp"
+            android:transcriptMode="alwaysScroll"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pseudonim"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="10/11/20 11:30 "
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pseudonim"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="10/11/20 11:30 "
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pseudonim"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="10/11/20 11:30 "
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -210,6 +91,7 @@
                 android:layout_weight="0.8"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Wprowadź wiadomość"
+                android:text="@={viewModel.currentMessage}"
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorPrimary" />
 
@@ -220,8 +102,9 @@
                 android:layout_weight="0.2"
                 android:background="@color/colorPrimary"
                 android:text="SEND"
+                android:onClick="@{() -> viewModel.sendMessage()}"
+                android:enabled="@{viewModel.isMessageValid}"
                 android:textColor="@color/colorBackground" />
         </LinearLayout>
-
     </LinearLayout>
 </layout>

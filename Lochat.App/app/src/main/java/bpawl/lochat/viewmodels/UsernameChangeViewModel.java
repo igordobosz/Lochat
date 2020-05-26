@@ -1,16 +1,17 @@
 package bpawl.lochat.viewmodels;
 
-import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+
 import javax.inject.Inject;
 
 import bpawl.lochat.services.IFragmentNavigation;
+import bpawl.lochat.services.IUserManager;
 import bpawl.lochat.ui.Profile;
 
-public class SigningViewModel extends LochatViewModel {
+public class UsernameChangeViewModel extends LochatViewModel {
 
     private static final String USERNAME_KEY = "user-name";
 
@@ -24,10 +25,10 @@ public class SigningViewModel extends LochatViewModel {
     private MediatorLiveData<Boolean> _isUserNameValid;
 
     @Inject
-    public SharedPreferences sp;
+    public IFragmentNavigation fragmentNavigation;
 
     @Inject
-    public IFragmentNavigation fragmentNavigation;
+    public IUserManager userManager;
 
     @Override
     public void init() {
@@ -56,6 +57,8 @@ public class SigningViewModel extends LochatViewModel {
                 _hasUserNameInvalidLength.setValue(_hasInvalidLength(s));
             }
         });
+
+        userManager.signIn();
     }
 
     public MutableLiveData<String> getUserName() {
@@ -89,15 +92,9 @@ public class SigningViewModel extends LochatViewModel {
         }
     }
 
-    private String _getUserNameFromStorage() {
-        return sp.getString(USERNAME_KEY, "");
-    }
+    private String _getUserNameFromStorage() { return userManager.getUser().Username; }
 
-    private void _saveUserNameInStorage() {
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(USERNAME_KEY, _userName.getValue());
-        editor.commit();
-    }
+    private void _saveUserNameInStorage() { userManager.changeUsername(_userName.getValue()); }
 
     private boolean _hasInvalidCharacters(String s) {
         return !s.isEmpty() && !s.matches("^[a-zA-Z0-9]+$");

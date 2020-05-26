@@ -25,4 +25,6 @@ public abstract class LochatFragment extends Fragment {
         super.onAttach(context);
         _lochatApp = (LochatApplication) getActivity().getApplication();
     }
+
+    public void onNavigatedTo() { }
 }
