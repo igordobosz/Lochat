@@ -88,7 +88,7 @@ public class UsernameChangeViewModel extends LochatViewModel {
     public void saveUsername() {
         if (_isUserNameValid.getValue()) {
             _saveUserNameInStorage();
-            fragmentNavigation.navigateToFragment(Profile.class.getName());
+            fragmentNavigation.back();
         }
     }
 

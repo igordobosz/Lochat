@@ -81,6 +81,19 @@ public class ChatManager implements IChatManager, IChatConnection {
     }
 
     @Override
+    public boolean createChatRoom(String name, int duration, int range) {
+        ChatRoom newChat = new ChatRoom();
+        newChat.Id = "100";
+        newChat.Messages = new ArrayList<>();
+        newChat.Owner = _user;
+        newChat.Name = name;
+        newChat.CreationTime = LocalDateTime.now();
+        newChat.TerminationTime = newChat.CreationTime.plusHours(duration);
+        _chatRooms.add(newChat);
+        return true;
+    }
+
+    @Override
     public boolean connectToChat(String chatID) {
         ChatRoom toConnect = _getChatBy(chatID);
         if (toConnect != null) {
