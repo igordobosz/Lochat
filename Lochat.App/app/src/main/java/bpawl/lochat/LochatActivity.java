@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import bpawl.lochat.services.IFragmentNavigation;
+import bpawl.lochat.ui.Signing;
 import bpawl.lochat.ui.UsernameChange;
 
 public abstract class LochatActivity extends AppCompatActivity {
@@ -24,7 +25,7 @@ public abstract class LochatActivity extends AppCompatActivity {
 
         _initFragmentNavigation();
         if (savedInstanceState == null) {
-            fragmentNavigation.navigateToFragment(UsernameChange.class.getName());
+            fragmentNavigation.navigateToFragment(Signing.class.getName());
         }
     }
 

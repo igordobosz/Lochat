@@ -22,6 +22,7 @@ import bpawl.lochat.ui.ChatList;
 import bpawl.lochat.ui.ChatMap;
 import bpawl.lochat.ui.ChatRoomCreation;
 import bpawl.lochat.ui.Profile;
+import bpawl.lochat.ui.Signing;
 import bpawl.lochat.ui.UsernameChange;
 import dagger.Binds;
 import dagger.Module;
@@ -33,7 +34,7 @@ public class ServicesModule {
     @Provides
     @Singleton
     public IFragmentNavigation provideFragmentNavigation() {
-        return new FragmentNavigation(Arrays.asList(ChatList.newInstance(), ChatMap.newInstance(),
+        return new FragmentNavigation(Arrays.asList(Signing.newInstance(), ChatList.newInstance(), ChatMap.newInstance(),
                 bpawl.lochat.ui.ChatRoom.newInstance(), ChatRoomCreation.newInstance(),
                 Profile.newInstance(), UsernameChange.newInstance()));
     }
