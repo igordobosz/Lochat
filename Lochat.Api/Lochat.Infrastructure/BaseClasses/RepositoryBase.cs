@@ -51,11 +51,11 @@ namespace Lochat.Infrastructure.BaseClasses
             await _dbContext.SaveChangesAsync();
         }
 
-        public virtual IEnumerable<TEntity> Get(QueryModel<TEntity> queryModel = null)
+        public virtual IEnumerable<TEntity> Get(Func<TEntity, bool> queryFunc = null)
         {
-	        if (queryModel != null)
+	        if (queryFunc != null)
 	        {
-		        return GetQuery().Where(queryModel.Condition);
+		        return GetQuery().Where(queryFunc);
 	        }
 	        else
 	        {

@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Lochat.Infrastructure.BaseClasses
 {
     [Authorize]
-    public abstract class CrudApiControllerBase<TEntity, TDto> : ApiControllerBase where TEntity : class, IEntity where TDto : IDto
+    public abstract class CrudApiControllerBase<TEntity, TDto, TQueryModel> : ApiControllerBase where TEntity : class, IEntity where TDto : IDto where TQueryModel : class, IQueryModel
     {
-        protected readonly ICrudService<TEntity, TDto> _baseService;
-        protected CrudApiControllerBase(ICrudService<TEntity, TDto> baseService)
+        protected readonly ICrudService<TEntity, TDto, TQueryModel> _baseService;
+        protected CrudApiControllerBase(ICrudService<TEntity, TDto, TQueryModel> baseService)
         {
             _baseService = baseService;
         }
