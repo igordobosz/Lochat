@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class Profile extends LochatFragment implements IDeleteChatRoomListener {
 
     private ProfileViewModel _viewModel;
     private ListView _userChatRooms;
+    private ArrayList<ChatRoom> _chatRooms;
+    private ChatListItemAdapter _adapter;
 
     public static Profile newInstance() {
         return new Profile();
@@ -34,14 +37,23 @@ public class Profile extends LochatFragment implements IDeleteChatRoomListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         final ProfileFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment, container, false);
         _viewModel = (ProfileViewModel) _resolveViewModel(ProfileViewModel.class);
         binding.setViewModel(_viewModel);
         binding.setLifecycleOwner(this);
+
         View view = binding.getRoot();
         _userChatRooms = view.findViewById(R.id.userChatRooms);
+        _userChatRooms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                _viewModel.selectChatRoom(_chatRooms.get(position).Id);
+            }
+        });
         _inflateChatList();
-        return binding.getRoot();
+
+        return view;
     }
 
     @Override
@@ -51,14 +63,22 @@ public class Profile extends LochatFragment implements IDeleteChatRoomListener {
     }
 
     private void _inflateChatList() {
-        ArrayList<ChatRoom> chatRooms = new ArrayList<ChatRoom>(_viewModel.getUserCreatedChatRooms());
-        ChatListItemAdapter adapter = new ChatListItemAdapter(getContext(), chatRooms, this);
-        _userChatRooms.setAdapter(adapter);
+        _chatRooms = new ArrayList<ChatRoom>(_viewModel.getUserCreatedChatRooms());
+        _adapter = new ChatListItemAdapter(getContext(), _chatRooms, this);
+        _userChatRooms.setAdapter(_adapter);
+    }
+
+    private void _refreshChatList() {
+        _chatRooms.clear();
+        _chatRooms.addAll(_viewModel.getUserCreatedChatRooms());
+        _adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void OnDeleteChatRoom(String id) {
-        _viewModel.deleteChatRoom(id);
-        _inflateChatList();
+    public void OnDeleteChatRoom(ChatRoom chatRoom) {
+        if (_viewModel.deleteChatRoom(chatRoom.Id)) {
+            _chatRooms.remove(chatRoom);
+            _adapter.notifyDataSetChanged();
+        }
     }
 }

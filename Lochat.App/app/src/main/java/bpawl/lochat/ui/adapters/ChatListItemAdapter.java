@@ -48,7 +48,7 @@ public class ChatListItemAdapter extends ArrayAdapter<ChatRoom> {
         chatDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _listener.OnDeleteChatRoom(current.Id);
+                _listener.OnDeleteChatRoom(current);
             }
         });
 

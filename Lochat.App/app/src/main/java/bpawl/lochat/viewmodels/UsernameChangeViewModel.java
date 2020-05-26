@@ -1,7 +1,5 @@
 package bpawl.lochat.viewmodels;
 
-import android.content.SharedPreferences;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;

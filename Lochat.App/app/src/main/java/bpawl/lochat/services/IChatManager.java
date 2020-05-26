@@ -6,5 +6,5 @@ import bpawl.lochat.model.ChatRoom;
 
 public interface IChatManager {
     Collection<ChatRoom> getUserCreated(String userID);
-    void deleteChatRoom(String id);
+    boolean deleteChatRoom(String id);
 }
