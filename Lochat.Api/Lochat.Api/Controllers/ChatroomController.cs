@@ -6,11 +6,12 @@ using Lochat.Infrastructure.BaseClasses;
 using Lochat.Infrastructure.Interfaces;
 using Lochat.Infrastructure.Models;
 using Lochat.Service.Dtos;
+using Lochat.Service.QueryModels;
 using Lochat.Service.Services;
 
 namespace Lochat.Api.Controllers
 {
-    public class ChatroomController : CrudApiControllerBase<Chatroom, ChatroomDto, QueryModelBase>
+    public class ChatroomController : CrudApiControllerBase<Chatroom, ChatroomDto, ChatroomQueryModel>
     {
         public ChatroomController(IChatroomService baseService) : base(baseService)
         {

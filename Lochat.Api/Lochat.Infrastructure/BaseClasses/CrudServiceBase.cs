@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using AutoMapper;
 using Lochat.Infrastructure.Interfaces;
+using Lochat.Infrastructure.Models;
 
 namespace Lochat.Infrastructure.BaseClasses
 {
@@ -20,9 +23,11 @@ namespace Lochat.Infrastructure.BaseClasses
 		#endregion
 		#region Protected methods
 
-		protected virtual Func<TEntity, bool> ConvertQueryModelToFunc(TQueryModel model)
+		protected virtual Expression<Func<TEntity, bool>> ConvertQueryModelToFunc(TQueryModel model)
 		{
-			return entity => entity.Id.Equals(model.Id);
+			if (!string.IsNullOrEmpty(model.Id))
+				return entity => entity.Id.Equals(model.Id);
+			return entity => true;
 		}
 
 		#endregion
