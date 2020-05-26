@@ -6,6 +6,7 @@ import bpawl.lochat.LochatActivity;
 import bpawl.lochat.LochatApplication;
 import bpawl.lochat.viewmodels.ChatRoomViewModel;
 import bpawl.lochat.viewmodels.ProfileViewModel;
+import bpawl.lochat.viewmodels.SigningViewModel;
 import bpawl.lochat.viewmodels.UsernameChangeViewModel;
 import dagger.Component;
 
@@ -17,4 +18,5 @@ public interface AppComponent {
     void inject(UsernameChangeViewModel usernameChangeViewModel);
     void inject(ProfileViewModel profileViewModel);
     void inject(ChatRoomViewModel chatRoomViewModel);
+    void inject(SigningViewModel signingViewModel);
 }

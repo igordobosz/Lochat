@@ -14,7 +14,7 @@
         android:background="@color/colorBackground"
         android:orientation="vertical"
         android:padding="20dp"
-        tools:context=".ui.Profile">
+        tools:context=".ui.ChatList">
 
 
         <LinearLayout
