@@ -14,7 +14,7 @@ namespace Lochat.Infrastructure.Extensions
         public static void RegisterServicesOfAssemblies(this IServiceCollection services, IEnumerable<Assembly> assemblies)
         {
             services.Scan(scan => scan.FromAssemblies(assemblies)
-                .AddClasses(classes => classes.AssignableTo(typeof(ICrudService<,>)))
+                .AddClasses(classes => classes.AssignableTo(typeof(ICrudService<,,>)))
                 .AsImplementedInterfaces()
                 .AddClasses(classes => classes.AssignableTo(typeof(IRepository<>)))
                 .AsImplementedInterfaces());

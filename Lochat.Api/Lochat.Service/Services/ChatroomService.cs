@@ -9,17 +9,14 @@ using Lochat.Service.Dtos;
 
 namespace Lochat.Service.Services
 {
-    namespace Lochat.Service.Services
+	public interface IChatroomService : ICrudService<Chatroom, ChatroomDto, QueryModelBase>
     {
-        public interface IChatroomService : ICrudService<Chatroom, ChatroomDto>
-        {
 
-        }
-        public class ChatroomService : CrudService<Chatroom, ChatroomDto>, IChatroomService
+    }
+    public class ChatroomService : CrudService<Chatroom, ChatroomDto, QueryModelBase>, IChatroomService
+    {
+        public ChatroomService(IRepository<Chatroom> baseRepository, IMapper mapper) : base(baseRepository, mapper)
         {
-            public ChatroomService(IRepository<Chatroom> baseRepository, IMapper mapper) : base(baseRepository, mapper)
-            {
-            }
         }
     }
 

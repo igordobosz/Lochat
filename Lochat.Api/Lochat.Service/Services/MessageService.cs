@@ -9,18 +9,14 @@ using Lochat.Service.Dtos;
 
 namespace Lochat.Service.Services
 {
-    namespace Lochat.Service.Services
+	public interface IMessageService : ICrudService<Message, MessageDto, QueryModelBase>
     {
-        public interface IMessageService : ICrudService<Message, MessageDto>
-        {
 
-        }
-        public class MessageService : CrudService<Message, MessageDto>, IMessageService
+    }
+    public class MessageService : CrudService<Message, MessageDto, QueryModelBase>, IMessageService
+    {
+        public MessageService(IRepository<Message> baseRepository, IMapper mapper) : base(baseRepository, mapper)
         {
-            public MessageService(IRepository<Message> baseRepository, IMapper mapper) : base(baseRepository, mapper)
-            {
-            }
         }
     }
-
 }

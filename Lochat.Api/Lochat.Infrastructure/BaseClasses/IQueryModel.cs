@@ -5,8 +5,8 @@ using Lochat.Infrastructure.Interfaces;
 
 namespace Lochat.Infrastructure.BaseClasses
 {
-    public class QueryModel<TEntity> where TEntity : IEntity
+    public interface IQueryModel
     {
-        public Func<TEntity, bool> Condition { get; set; }
+	    string Id { get; set; }
     }
 }
