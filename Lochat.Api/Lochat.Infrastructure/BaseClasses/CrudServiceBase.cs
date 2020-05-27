@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
@@ -23,11 +24,11 @@ namespace Lochat.Infrastructure.BaseClasses
 		#endregion
 		#region Protected methods
 
-		protected virtual Expression<Func<TEntity, bool>> ConvertQueryModelToFunc(TQueryModel model)
+		protected virtual IEnumerable<TEntity> ApplyQueryModel(IEnumerable<TEntity> items, TQueryModel model)
 		{
 			if (!string.IsNullOrEmpty(model.Id))
-				return entity => entity.Id.Equals(model.Id);
-			return entity => true;
+				return items.Where(e => e.Id.Equals(model.Id));
+			return items;
 		}
 
 		#endregion
@@ -73,7 +74,7 @@ namespace Lochat.Infrastructure.BaseClasses
 
 		public IEnumerable<TEntity> GetEntity(TQueryModel queryModel)
 		{
-			return _baseRepository.Get(ConvertQueryModelToFunc(queryModel));
+			return ApplyQueryModel(_baseRepository.Get(), queryModel);
 		}
 
 		#endregion

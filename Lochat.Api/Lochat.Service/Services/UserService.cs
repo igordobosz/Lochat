@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -39,16 +40,15 @@ namespace Lochat.Service.Services
 	        return user;
         }
 
-	    protected override Expression<Func<User, bool>> ConvertQueryModelToFunc(UserQueryModel model)
-		{
-	        var pred = base.ConvertQueryModelToFunc(model);
-	        if (!string.IsNullOrEmpty(model.Email))
-	        {
-		        Expression<Func<User, bool>> expr = user => user.Email.Equals(model.Email);
-		        pred = Expression.Lambda<Func<User, bool>>(Expression.And(pred, expr));
-	        }
+	    protected override IEnumerable<User> ApplyQueryModel(IEnumerable<User> items, UserQueryModel model)
+	    {
+		    items = base.ApplyQueryModel(items, model);
+		    if (!string.IsNullOrEmpty(model.Email))
+		    {
+			    items = items.Where(user => user.Email.Equals(model.Email));
+		    }
 
-	        return pred;
-        }
+		    return items;
+	    }
     }
 }

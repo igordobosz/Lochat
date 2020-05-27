@@ -23,21 +23,14 @@ namespace Lochat.Service.Services
         {
         }
 
-        protected override Expression<Func<Chatroom, bool>> ConvertQueryModelToFunc(ChatroomQueryModel model)
+        protected override IEnumerable<Chatroom> ApplyQueryModel(IEnumerable<Chatroom> items, ChatroomQueryModel model)
         {
-	        var pred = base.ConvertQueryModelToFunc(model);
+	        items =  base.ApplyQueryModel(items, model);
 	        if (!string.IsNullOrEmpty(model.OwnerId))
 	        {
-		        Expression<Func<Chatroom, bool>> expr = chatroom => chatroom.OwnerId.Equals(model.OwnerId);
-		        pred = Expression.Lambda<Func<Chatroom, bool>>(Expression.And(pred, expr));
+		        items = items.Where(chatroom => chatroom.OwnerId.Equals(model.OwnerId));
 	        }
 
-	        return pred;
-        }
-
-        public override IEnumerable<ChatroomDto> Get(ChatroomQueryModel model = null)
-        {
-	        var items = base.Get(model);
 	        if (model.UserLatitude != null && model.UserLongitude != null && model.MaxDistance != null)
 	        {
 		        items = items.Where(chatroom => DistanceHelper.HaversineDistance(model.UserLatitude.Value, model.UserLongitude.Value, chatroom.Latitude, chatroom.Longitude, model.MaxDistance.Value));
