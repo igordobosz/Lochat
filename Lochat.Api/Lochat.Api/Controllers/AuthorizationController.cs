@@ -44,8 +44,7 @@ namespace Lochat.Api.Controllers
 			}
 			catch (Exception e)
 			{
-				throw;
-//				return BadRequest(e.StackTrace);
+				return BadRequest(e.StackTrace + e.InnerException + e.Message + e.InnerException);
 			}
 		}
 
