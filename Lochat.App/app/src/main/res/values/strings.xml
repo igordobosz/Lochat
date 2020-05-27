@@ -8,5 +8,5 @@
 
     <string name="creation_label">Wprowadź nazwę czatu</string>
     <string name="creation_button">Utwórz</string>
-    <string name="creation_incorrect_name">Nazwa musi zawierać od 3 do 20 znaków.</string>
+    <string name="creation_incorrect_name">Nazwa nie może być pusta.</string>
 </resources>

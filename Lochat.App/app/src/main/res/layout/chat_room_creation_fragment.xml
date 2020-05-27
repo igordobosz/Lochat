@@ -29,6 +29,7 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/colorAccent"
             android:hint="@string/creation_label"
+            android:text="@={viewModel.chatName}"
             android:textColor="@color/colorAccent"
             android:textColorHint="@color/colorAccent" />
 
@@ -47,6 +48,7 @@
                 android:textColor="@color/colorAccent" />
 
             <Spinner
+                android:id="@+id/chooseDurationSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent" />
@@ -68,6 +70,7 @@
                 android:textColor="@color/colorAccent" />
 
             <Spinner
+                android:id="@+id/chooseRangeSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent" />
@@ -80,7 +83,9 @@
             android:layout_marginBottom="16dp"
             android:background="@color/colorAccent"
             android:text="@string/creation_button"
-            android:textColor="@color/textColorPrimary" />
+            android:textColor="@color/textColorPrimary"
+            android:onClick="@{() -> viewModel.createChatRoom()}"
+            android:enabled="@{viewModel.isChatNameValid}"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -88,7 +93,8 @@
             android:layout_marginHorizontal="4dp"
             android:text="@string/creation_incorrect_name"
             android:textColor="@color/colorAccentDark"
-            android:visibility="visible" />
+            android:textAlignment="center"
+            android:visibility="@{viewModel.isChatNameValid ? View.GONE : View.VISIBLE}"/>
 
     </LinearLayout>
 </layout>
