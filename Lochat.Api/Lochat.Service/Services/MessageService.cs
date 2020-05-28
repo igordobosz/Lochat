@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using AutoMapper;
@@ -22,16 +23,16 @@ namespace Lochat.Service.Services
         {
         }
 
-        protected override Expression<Func<Message, bool>> ConvertQueryModelToFunc(MessageQueryModel model)
+        protected override IEnumerable<Message> ApplyQueryModel(IEnumerable<Message> items, MessageQueryModel model)
         {
-	        var pred = base.ConvertQueryModelToFunc(model);
+	        items = base.ApplyQueryModel(items, model);
+
 	        if (!string.IsNullOrEmpty(model.AuthorId))
 	        {
-		        Expression<Func<Message, bool>> expr = message => message.AuthorId == model.AuthorId;
-		        pred = pred.And(expr);
+		        items = items.Where(mess => mess.AuthorId.Equals(model.AuthorId));
 	        }
 
-	        return pred;
+            return items;
         }
     }
 }
