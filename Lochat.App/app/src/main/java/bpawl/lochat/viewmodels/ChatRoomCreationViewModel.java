@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import bpawl.lochat.services.IChatManager;
@@ -32,12 +33,12 @@ public class ChatRoomCreationViewModel extends LochatViewModel {
     @Override
     public void init() {
         _availableDurations = new HashMap<>();
-        _availableDurations.put("6 godzin", 6);
-        _availableDurations.put("12 godzin", 12);
-        _availableDurations.put("24 godziny", 24);
+        _availableDurations.put("12 godzin", 6);
+        _availableDurations.put("24 godziny", 12);
+        _availableDurations.put("48 godzin", 24);
 
         _availableRanges = new HashMap<>();
-        _availableRanges.put("kilometr", 1);
+        _availableRanges.put("1 kilometr", 1);
         _availableRanges.put("3 kilometry", 3);
         _availableRanges.put("5 kilometrów", 5);
 
@@ -51,12 +52,12 @@ public class ChatRoomCreationViewModel extends LochatViewModel {
         });
     }
 
-    public Collection<String> getAvailableDurations() {
-        return _availableDurations.keySet();
+    public String[] getAvailableDurations() {
+        return _availableDurations.keySet().stream().sorted().toArray(String[]::new);
     }
 
-    public Collection<String> getAvailableRanges() {
-        return _availableRanges.keySet();
+    public String[] getAvailableRanges() {
+        return _availableRanges.keySet().stream().sorted().toArray(String[]::new);
     }
 
     public String getSelectedDuration() {

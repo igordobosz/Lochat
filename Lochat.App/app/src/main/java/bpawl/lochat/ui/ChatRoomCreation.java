@@ -38,7 +38,7 @@ public class ChatRoomCreation extends LochatFragment {
 
         View view = binding.getRoot();
         Spinner duration = (Spinner) view.findViewById(R.id.chooseDurationSpinner);
-        final ArrayAdapter<String> durationAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<String>(viewModel.getAvailableDurations()));
+        final ArrayAdapter<String> durationAdapter = new ArrayAdapter<String>(getContext(), R.layout.item_spinner_layout, viewModel.getAvailableDurations());
         duration.setAdapter(durationAdapter);
         duration.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -54,7 +54,7 @@ public class ChatRoomCreation extends LochatFragment {
         duration.setSelection(0);
 
         Spinner range = (Spinner) view.findViewById(R.id.chooseRangeSpinner);
-        final ArrayAdapter<String> rangeAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, new ArrayList<String>(viewModel.getAvailableRanges()));
+        final ArrayAdapter<String> rangeAdapter = new ArrayAdapter<String>(getContext(), R.layout.item_spinner_layout, viewModel.getAvailableRanges());
         range.setAdapter(rangeAdapter);
         range.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

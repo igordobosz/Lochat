@@ -7,12 +7,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+
+import bpawl.lochat.MainActivity;
 import bpawl.lochat.R;
 import bpawl.lochat.databinding.SigningFragmentBinding;
+import bpawl.lochat.ui.utils.ISigningCompleteListener;
 import bpawl.lochat.viewmodels.LochatViewModel;
 import bpawl.lochat.viewmodels.SigningViewModel;
 
-public class Signing extends LochatFragment {
+public class Signing extends LochatFragment implements ISigningCompleteListener {
     public SigningViewModel viewModel;
 
     public static Signing newInstance() {
@@ -22,6 +25,7 @@ public class Signing extends LochatFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        ((MainActivity) getActivity()).hideToolbar();
         final SigningFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.signing_fragment, container, false);
         viewModel = (SigningViewModel) _resolveViewModel(SigningViewModel.class);
         binding.setViewModel(viewModel);
@@ -44,5 +48,11 @@ public class Signing extends LochatFragment {
         SigningViewModel signingViewModel = (SigningViewModel) viewModel;
         _lochatApp.appComponent.inject(signingViewModel);
         signingViewModel.init();
+        signingViewModel.setSigningCompleteListener(this);
+    }
+
+    @Override
+    public void onSigningComplete() {
+        ((MainActivity) getActivity()).showToolbar();;
     }
 }
