@@ -31,9 +31,9 @@ namespace Lochat.Service.Services
 		        items = items.Where(chatroom => chatroom.OwnerId.Equals(model.OwnerId));
 	        }
 
-	        if (model.UserLatitude != null && model.UserLongitude != null && model.MaxDistance != null)
+	        if (model.UserLatitude != null && model.UserLongitude != null)
 	        {
-		        items = items.Where(chatroom => DistanceHelper.HaversineDistance(model.UserLatitude.Value, model.UserLongitude.Value, chatroom.Latitude, chatroom.Longitude, model.MaxDistance.Value));
+		        items = items.Where(chatroom => DistanceHelper.HaversineDistance(model.UserLatitude.Value, model.UserLongitude.Value, chatroom.Latitude, chatroom.Longitude, chatroom.RangeInKilometers));
 	        }
 
 	        return items;
