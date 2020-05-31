@@ -32,6 +32,11 @@ namespace Lochat.Service.Services
 		        items = items.Where(mess => mess.AuthorId.Equals(model.AuthorId));
 	        }
 
+	        if (!string.IsNullOrEmpty(model.ChatroomId))
+	        {
+		        items = items.Where(mess => mess.ChatroomId.Equals(model.ChatroomId));
+	        }
+
             return items;
         }
     }

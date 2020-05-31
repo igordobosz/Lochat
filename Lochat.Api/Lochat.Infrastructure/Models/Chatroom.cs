@@ -15,6 +15,7 @@ namespace Lochat.Infrastructure.Models
         public DateTime TerminationTime { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public int RangeInKilometers { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace Lochat.Service.QueryModels
 	public class MessageQueryModel : QueryModelBase
 	{
 		public string AuthorId { get; set; }
+		public string ChatroomId { get; set; }
 	}
 }
