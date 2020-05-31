@@ -31,7 +31,7 @@ public class ChatRoomViewModel extends LochatViewModel {
 
     @Override
     public void init() {
-        _messages = new MutableLiveData<List<Message>>(new ArrayList<Message>(chatConnection.getConnectedChat().Messages));
+        _messages = new MutableLiveData<List<Message>>(new ArrayList<Message>());
         _currentMessage = new MutableLiveData<String>("");
         _isMessageValid = new MediatorLiveData<Boolean>();
         _isMessageValid.addSource(_currentMessage, new Observer<String>() {
@@ -40,6 +40,7 @@ public class ChatRoomViewModel extends LochatViewModel {
                 _isMessageValid.setValue(_currentMessage.getValue().trim().length() > 0);
             }
         });
+        super.init();
     }
 
     public String getChatName() {
@@ -51,7 +52,8 @@ public class ChatRoomViewModel extends LochatViewModel {
     }
 
     public void deleteChatRoom() {
-        if (chatManager.deleteChatRoom(chatConnection.getConnectedChat().Id)) {
+        chatManager.deleteChatRoom(chatConnection.getConnectedChat().Id);
+        if (true) {
             chatConnection.disconnectFromChat();
             fragmentNavigation.back();
         }
@@ -78,6 +80,6 @@ public class ChatRoomViewModel extends LochatViewModel {
     }
 
     private void _update() {
-        _messages.setValue(new ArrayList<Message>(chatConnection.getConnectedChat().Messages));
+        _messages.setValue(new ArrayList<Message>());
     }
 }

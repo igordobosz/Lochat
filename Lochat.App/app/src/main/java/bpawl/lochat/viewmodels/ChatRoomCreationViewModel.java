@@ -10,8 +10,12 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+
+import bpawl.lochat.model.ChatRoom;
 import bpawl.lochat.services.IChatManager;
 import bpawl.lochat.services.IFragmentNavigation;
+import bpawl.lochat.services.utils.IRequestFailedListener;
+import bpawl.lochat.services.utils.IRequestSuccessfulListener;
 
 public class ChatRoomCreationViewModel extends LochatViewModel {
     @Inject
@@ -28,14 +32,17 @@ public class ChatRoomCreationViewModel extends LochatViewModel {
     private String _selectedRange;
 
     private MutableLiveData<String> _chatName;
+    private MutableLiveData<Boolean> _isProcessing;
     private MediatorLiveData<Boolean> _isChatNameValid;
 
     @Override
     public void init() {
+        _isProcessing = new MutableLiveData<Boolean>(false);
+
         _availableDurations = new HashMap<>();
-        _availableDurations.put("12 godzin", 6);
-        _availableDurations.put("24 godziny", 12);
-        _availableDurations.put("48 godzin", 24);
+        _availableDurations.put("12 godzin", 12);
+        _availableDurations.put("24 godziny", 24);
+        _availableDurations.put("48 godzin", 48);
 
         _availableRanges = new HashMap<>();
         _availableRanges.put("1 kilometr", 1);
@@ -50,6 +57,12 @@ public class ChatRoomCreationViewModel extends LochatViewModel {
                 _isChatNameValid.setValue(_chatName.getValue().trim().length() > 0);
             }
         });
+
+        super.init();
+    }
+
+    public LiveData<Boolean> getIsProcessing() {
+        return _isProcessing;
     }
 
     public String[] getAvailableDurations() {
@@ -86,8 +99,22 @@ public class ChatRoomCreationViewModel extends LochatViewModel {
 
     public void createChatRoom() {
         if(_chatName.getValue().trim().length() > 0) {
-            chatManager.createChatRoom(_chatName.getValue(), _availableDurations.getOrDefault(_selectedDuration, 6), _availableRanges.getOrDefault(_selectedRange, 1));
-            fragmentNavigation.back();
+            _isProcessing.setValue(true);
+            chatManager.createChatRoom(_chatName.getValue(),
+                    _availableDurations.getOrDefault(_selectedDuration, 6),
+                    _availableRanges.getOrDefault(_selectedRange, 1),
+                    new IRequestSuccessfulListener<ChatRoom>() {
+                        @Override
+                        public void onRequestSuccessful(ChatRoom result) {
+                            _isProcessing.setValue(false);
+                            fragmentNavigation.back();
+                        }
+                    }, new IRequestFailedListener() {
+                        @Override
+                        public void onRequestFailed() {
+                            _isProcessing.setValue(false);
+                        }
+                    });
         }
     }
 }

@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import javax.inject.Inject;
 import bpawl.lochat.services.IFragmentNavigation;
 import bpawl.lochat.services.IUserManager;
-import bpawl.lochat.ui.ChatMap;
-import bpawl.lochat.ui.utils.ISigningCompleteListener;
+import bpawl.lochat.ui.utils.ISignInRequestListener;
 
 public class SigningViewModel extends LochatViewModel {
+    private ISignInRequestListener _listener;
+
     @Inject
     public IFragmentNavigation fragmentNavigation;
 
@@ -17,13 +18,12 @@ public class SigningViewModel extends LochatViewModel {
 
     private MutableLiveData<Boolean> _showSignInButton;
     private MutableLiveData<Boolean> _showSpinner;
-    private ISigningCompleteListener _signingCompleteListener;
 
     @Override
     public void init() {
         _showSignInButton = new MutableLiveData<>(false);
         _showSpinner = new MutableLiveData<>(true);
-        _trySilentSignIn();
+        super.init();
     }
 
     public MutableLiveData<Boolean> getShowSignInButton() {
@@ -34,37 +34,20 @@ public class SigningViewModel extends LochatViewModel {
         return _showSpinner;
     }
 
+    public void setSignInRequestedListener(ISignInRequestListener listener) {
+        _listener = listener;
+    }
+
     public void signIn() {
-        _showSignInButton.setValue(false);
-        _showSpinner.setValue(true);
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                userManager.signIn();
-                _signingComplete();
-            }
-        }, 1000);
-    }
-
-    public void setSigningCompleteListener(ISigningCompleteListener listener) {
-        _signingCompleteListener = listener;
-    }
-
-    private void _trySilentSignIn() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                _showSpinner.setValue(false);
-                _showSignInButton.setValue(true);
-            }
-        }, 1000);
-    }
-
-    private void _signingComplete() {
-        if(_signingCompleteListener != null) {
-            _signingCompleteListener.onSigningComplete();
+        if(_listener != null) {
+            _showSignInButton.setValue(false);
+            _showSpinner.setValue(true);
+            _listener.onSignInRequested();
         }
-        fragmentNavigation.navigateToFragment(ChatMap.class.getName());
+    }
+
+    public void signingFailed() {
+        _showSignInButton.setValue(true);
+        _showSpinner.setValue(false);
     }
 }

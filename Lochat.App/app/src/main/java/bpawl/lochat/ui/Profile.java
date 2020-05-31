@@ -22,6 +22,7 @@ import bpawl.lochat.ui.adapters.ChatListItemAdapter;
 import bpawl.lochat.ui.utils.IDeleteChatRoomListener;
 import bpawl.lochat.viewmodels.LochatViewModel;
 import bpawl.lochat.viewmodels.ProfileViewModel;
+import bpawl.lochat.viewmodels.utils.IViewModelInitListener;
 
 public class Profile extends LochatFragment implements IDeleteChatRoomListener {
 
@@ -51,7 +52,13 @@ public class Profile extends LochatFragment implements IDeleteChatRoomListener {
                 _viewModel.selectChatRoom(_chatRooms.get(position).Id);
             }
         });
-        _inflateChatList();
+
+        _viewModel.setInitListener(new IViewModelInitListener() {
+            @Override
+            public void onViewModelInit() {
+                _inflateChatList();
+            }
+        });
 
         return view;
     }
@@ -60,18 +67,13 @@ public class Profile extends LochatFragment implements IDeleteChatRoomListener {
     protected void _initViewModel(LochatViewModel viewModel) {
         ProfileViewModel profileViewModel = (ProfileViewModel) viewModel;
         _lochatApp.appComponent.inject(profileViewModel);
+        profileViewModel.init();
     }
 
     private void _inflateChatList() {
         _chatRooms = new ArrayList<ChatRoom>(_viewModel.getUserCreatedChatRooms());
         _adapter = new ChatListItemAdapter(getContext(), _chatRooms, this);
         _userChatRooms.setAdapter(_adapter);
-    }
-
-    private void _refreshChatList() {
-        _chatRooms.clear();
-        _chatRooms.addAll(_viewModel.getUserCreatedChatRooms());
-        _adapter.notifyDataSetChanged();
     }
 
     @Override

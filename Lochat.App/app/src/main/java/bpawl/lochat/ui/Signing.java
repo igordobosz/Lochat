@@ -11,12 +11,14 @@ import androidx.databinding.DataBindingUtil;
 import bpawl.lochat.MainActivity;
 import bpawl.lochat.R;
 import bpawl.lochat.databinding.SigningFragmentBinding;
-import bpawl.lochat.ui.utils.ISigningCompleteListener;
+import bpawl.lochat.ui.utils.ISignInRequestListener;
+import bpawl.lochat.ui.utils.ISigningFailedListener;
 import bpawl.lochat.viewmodels.LochatViewModel;
 import bpawl.lochat.viewmodels.SigningViewModel;
 
-public class Signing extends LochatFragment implements ISigningCompleteListener {
+public class Signing extends LochatFragment implements ISigningFailedListener, ISignInRequestListener {
     public SigningViewModel viewModel;
+    public MainActivity activity;
 
     public static Signing newInstance() {
         return new Signing();
@@ -25,7 +27,9 @@ public class Signing extends LochatFragment implements ISigningCompleteListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).hideToolbar();
+        activity = ((MainActivity) getActivity());
+        activity.hideToolbar();
+
         final SigningFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.signing_fragment, container, false);
         viewModel = (SigningViewModel) _resolveViewModel(SigningViewModel.class);
         binding.setViewModel(viewModel);
@@ -40,6 +44,9 @@ public class Signing extends LochatFragment implements ISigningCompleteListener 
             }
         });
 
+        viewModel.setSignInRequestedListener(this);
+        activity.setSigningFailedListener(this);
+
         return view;
     }
 
@@ -48,11 +55,15 @@ public class Signing extends LochatFragment implements ISigningCompleteListener 
         SigningViewModel signingViewModel = (SigningViewModel) viewModel;
         _lochatApp.appComponent.inject(signingViewModel);
         signingViewModel.init();
-        signingViewModel.setSigningCompleteListener(this);
     }
 
     @Override
-    public void onSigningComplete() {
-        ((MainActivity) getActivity()).showToolbar();;
+    public void onSignInFailed() {
+        viewModel.signingFailed();
+    }
+
+    @Override
+    public void onSignInRequested() {
+        activity.signIn();
     }
 }

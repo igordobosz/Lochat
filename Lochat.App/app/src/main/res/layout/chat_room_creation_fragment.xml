@@ -85,7 +85,15 @@
             android:text="@string/creation_button"
             android:textColor="@color/textColorPrimary"
             android:onClick="@{() -> viewModel.createChatRoom()}"
-            android:enabled="@{viewModel.isChatNameValid}"/>
+            android:enabled="@{viewModel.isChatNameValid}"
+            android:visibility="@{viewModel.isProcessing ? View.GONE : View.VISIBLE}" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:visibility="@{viewModel.isProcessing ? View.VISIBLE : View.GONE}" />
 
         <TextView
             android:layout_width="match_parent"
