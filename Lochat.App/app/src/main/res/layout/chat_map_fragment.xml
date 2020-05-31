@@ -11,12 +11,33 @@
     <FrameLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.ChatMap">
+        android:background="@color/colorBackground"
+        android:orientation="vertical"
+        tools:context=".ui.Profile">
 
-        <TextView
+        <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/chatRoomsMap"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello" />
+            map:cameraTilt="30"
+            map:cameraZoom="14"
+            map:mapType="normal"
+            map:uiCompass="false"
+            map:uiRotateGestures="true"
+            map:uiScrollGestures="false"
+            map:uiTiltGestures="false"
+            map:uiZoomControls="false"
+            map:uiZoomGestures="false"/>
 
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/crateChatFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:src="@drawable/ic_add_white_24dp"
+            android:contentDescription="New chat room"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> viewModel.createChatRoom()}"/>
     </FrameLayout>
 </layout>

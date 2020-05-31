@@ -18,7 +18,6 @@ import bpawl.lochat.services.IUserManager;
 import bpawl.lochat.services.MessageCrudService;
 import bpawl.lochat.services.UserCrudService;
 import bpawl.lochat.services.UserManager;
-import bpawl.lochat.ui.ChatList;
 import bpawl.lochat.ui.ChatMap;
 import bpawl.lochat.ui.ChatRoomCreation;
 import bpawl.lochat.ui.Profile;
@@ -34,7 +33,7 @@ public class ServicesModule {
     @Provides
     @Singleton
     public IFragmentNavigation provideFragmentNavigation() {
-        return new FragmentNavigation(Arrays.asList(Signing.newInstance(), ChatList.newInstance(), ChatMap.newInstance(),
+        return new FragmentNavigation(Arrays.asList(Signing.newInstance(), ChatMap.newInstance(),
                 bpawl.lochat.ui.ChatRoom.newInstance(), ChatRoomCreation.newInstance(),
                 Profile.newInstance(), UsernameChange.newInstance()));
     }

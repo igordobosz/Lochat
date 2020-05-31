@@ -42,7 +42,7 @@ public class FragmentNavigation implements IFragmentNavigation {
     @Override
     public void navigateToFragment(String fragmentName) {
         String normalisedName = fragmentName.toLowerCase();
-        if (_availableFragments.containsKey(normalisedName)) {
+        if (_availableFragments.containsKey(normalisedName) && !normalisedName.equalsIgnoreCase(_current)) {
             _commitFragmentNavigation(normalisedName);
             if (_current != null) {
                 _history.push(_current);

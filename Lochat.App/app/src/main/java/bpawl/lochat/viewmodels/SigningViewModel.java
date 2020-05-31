@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData;
 import javax.inject.Inject;
 import bpawl.lochat.services.IFragmentNavigation;
 import bpawl.lochat.services.IUserManager;
-import bpawl.lochat.ui.Profile;
+import bpawl.lochat.ui.ChatMap;
+import bpawl.lochat.ui.utils.ISigningCompleteListener;
 
 public class SigningViewModel extends LochatViewModel {
     @Inject
@@ -16,6 +17,7 @@ public class SigningViewModel extends LochatViewModel {
 
     private MutableLiveData<Boolean> _showSignInButton;
     private MutableLiveData<Boolean> _showSpinner;
+    private ISigningCompleteListener _signingCompleteListener;
 
     @Override
     public void init() {
@@ -40,9 +42,13 @@ public class SigningViewModel extends LochatViewModel {
         handler.postDelayed(new Runnable() {
             public void run() {
                 userManager.signIn();
-                fragmentNavigation.navigateToFragment(Profile.class.getName());
+                _signingComplete();
             }
-        }, 2000);
+        }, 1000);
+    }
+
+    public void setSigningCompleteListener(ISigningCompleteListener listener) {
+        _signingCompleteListener = listener;
     }
 
     private void _trySilentSignIn() {
@@ -52,6 +58,13 @@ public class SigningViewModel extends LochatViewModel {
                 _showSpinner.setValue(false);
                 _showSignInButton.setValue(true);
             }
-        }, 2000);
+        }, 1000);
+    }
+
+    private void _signingComplete() {
+        if(_signingCompleteListener != null) {
+            _signingCompleteListener.onSigningComplete();
+        }
+        fragmentNavigation.navigateToFragment(ChatMap.class.getName());
     }
 }

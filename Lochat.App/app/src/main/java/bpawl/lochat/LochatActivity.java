@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import bpawl.lochat.services.IFragmentNavigation;
 import bpawl.lochat.ui.Signing;
-import bpawl.lochat.ui.UsernameChange;
 
 public abstract class LochatActivity extends AppCompatActivity {
     protected LochatApplication _lochatApp;

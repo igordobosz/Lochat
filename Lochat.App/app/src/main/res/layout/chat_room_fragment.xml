@@ -56,7 +56,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
                     android:background="@color/colorAccent"
-                    android:text="Delete"
+                    android:text="Usuń"
                     android:onClick="@{() -> viewModel.deleteChatRoom()}"
                     android:textColor="@color/textColorPrimary"
                     android:visibility="visible" />
@@ -77,7 +77,8 @@
             android:layout_weight="1"
             android:divider="@android:color/transparent"
             android:dividerHeight="20dp"
-            android:transcriptMode="alwaysScroll"/>
+            android:transcriptMode="alwaysScroll"
+            android:layout_marginBottom="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,7 +89,7 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Wprowadź wiadomość"
                 android:text="@={viewModel.currentMessage}"
@@ -96,12 +97,11 @@
                 android:textColorHint="@color/colorPrimary" />
 
             <Button
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="0.2"
                 android:background="@color/colorPrimary"
-                android:text="SEND"
+                android:text="Wyślij"
                 android:onClick="@{() -> viewModel.sendMessage()}"
                 android:enabled="@{viewModel.isMessageValid}"
                 android:textColor="@color/colorBackground" />
