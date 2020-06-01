@@ -2,21 +2,14 @@ package bpawl.lochat.services;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
 import bpawl.lochat.api.IChatroomAPI;
 import bpawl.lochat.api.IRetrofitProvider;
 import bpawl.lochat.api.RequestModel.GetChatRoomByOwnerRequest;
-import bpawl.lochat.api.RequestModel.GetUserByEmailRequest;
 import bpawl.lochat.model.ChatRoom;
 import bpawl.lochat.model.Message;
-import bpawl.lochat.model.User;
 import bpawl.lochat.services.utils.IRequestFailedListener;
 import bpawl.lochat.services.utils.IRequestSuccessfulListener;
 import retrofit2.Call;
@@ -27,9 +20,7 @@ import retrofit2.Response;
 public class ChatManager implements IChatManager, IChatConnection {
     private IUserManager _userManager;
     private IChatroomAPI _chatroomAPI;
-    private Collection<ChatRoom> _chatRooms;
     private ChatRoom _connectedChat;
-    private User _user;
 
     @Inject
     public ChatManager(IRetrofitProvider provider, IUserManager userManager) {
@@ -64,10 +55,26 @@ public class ChatManager implements IChatManager, IChatConnection {
     }
 
     @Override
-    public void deleteChatRoom(String id) {
-        ChatRoom toDelete = _getChatBy(id);
-        if (toDelete != null) {
-            _chatRooms.remove(toDelete);
+    public void deleteChatRoom(ChatRoom toDelete, IRequestSuccessfulListener<Boolean> callback, IRequestFailedListener onFailed) {
+        if (_userManager.getAuthToken() == null) {
+            onFailed.onRequestFailed();
+        } else {
+            _chatroomAPI.deleteChatroom(_userManager.getAuthToken(), toDelete).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        callback.onRequestSuccessful(true);
+                    }
+                    else {
+                        onFailed.onRequestFailed();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    onFailed.onRequestFailed();
+                }
+            });
         }
     }
 
@@ -130,8 +137,7 @@ public class ChatManager implements IChatManager, IChatConnection {
         Message newMessage = new Message();
         newMessage.Text = text;
         newMessage.Id = "100";
-        newMessage.Author = _user;
-        newMessage.AuthorId = _user.Id;
+        //newMessage.AuthorId = _user.Id;
         newMessage.Chatroom = _connectedChat;
         newMessage.ChatroomId = _connectedChat.Id;
         newMessage.CreationTime = LocalDateTime.now();

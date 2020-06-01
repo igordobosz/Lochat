@@ -8,6 +8,6 @@ import bpawl.lochat.services.utils.IRequestSuccessfulListener;
 
 public interface IChatManager {
     void getUserCreated(IRequestSuccessfulListener<List<ChatRoom>> callback, IRequestFailedListener onFailed);
-    void deleteChatRoom(String id);
+    void deleteChatRoom(ChatRoom toDelete, IRequestSuccessfulListener<Boolean> callback, IRequestFailedListener onFailed);
     void createChatRoom(String name, int duration, int range, IRequestSuccessfulListener<ChatRoom> callback, IRequestFailedListener onFailed);
 }

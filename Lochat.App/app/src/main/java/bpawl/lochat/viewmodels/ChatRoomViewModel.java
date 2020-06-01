@@ -52,7 +52,7 @@ public class ChatRoomViewModel extends LochatViewModel {
     }
 
     public void deleteChatRoom() {
-        chatManager.deleteChatRoom(chatConnection.getConnectedChat().Id);
+        //chatManager.deleteChatRoom(chatConnection.getConnectedChat().Id);
         if (true) {
             chatConnection.disconnectFromChat();
             fragmentNavigation.back();

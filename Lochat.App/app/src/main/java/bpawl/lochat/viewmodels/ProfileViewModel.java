@@ -2,10 +2,10 @@ package bpawl.lochat.viewmodels;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.inject.Inject;
 import bpawl.lochat.model.ChatRoom;
@@ -59,8 +59,8 @@ public class ProfileViewModel extends LochatViewModel {
         return _isProcessing;
     }
 
-    public Collection<ChatRoom> getUserCreatedChatRooms() {
-        return _chatRooms.getValue();
+    public LiveData<Collection<ChatRoom>> getUserCreatedChatRooms() {
+        return _chatRooms;
     }
 
     public void createChatRoom() {
@@ -71,8 +71,25 @@ public class ProfileViewModel extends LochatViewModel {
         fragmentNavigation.navigateToFragment(UsernameChange.class.getName());
     }
 
-    public boolean deleteChatRoom(String id) {
-        return true;
+    public void deleteChatRoom(String id) {
+        ChatRoom toDelete = _chatRooms.getValue().stream().filter(chatRoom -> id.equals(chatRoom.Id)).findFirst().get();
+        if(toDelete != null) {
+            _isProcessing.setValue(true);
+            chatManager.deleteChatRoom(toDelete, new IRequestSuccessfulListener<Boolean>() {
+                @Override
+                public void onRequestSuccessful(Boolean result) {
+                    Collection<ChatRoom> chatRooms = _chatRooms.getValue();
+                    chatRooms.removeIf((ChatRoom chat) -> id.equals(chat.Id));
+                    _chatRooms.setValue(chatRooms);
+                    _isProcessing.setValue(false);
+                }
+            }, new IRequestFailedListener() {
+                @Override
+                public void onRequestFailed() {
+                    _isProcessing.setValue(false);
+                }
+            });
+        }
     }
 
     public void selectChatRoom(String id) {
