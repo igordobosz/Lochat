@@ -40,16 +40,16 @@ namespace Lochat.Infrastructure.BaseClasses
         }
 
 
-        public virtual async Task Delete(TEntity entity)
+        public virtual Task Delete(TEntity entity)
         {
             var oldEntity = GetQuery().FirstOrDefault(e => e.Id.Equals(entity.Id));
-            if (oldEntity == null)
+            if (oldEntity == default)
             {
                 throw new NotFoundException("Entity not found");
             }
 
             GetQuery().Remove(oldEntity);
-            await _dbContext.SaveChangesAsync();
+            return _dbContext.SaveChangesAsync();
         }
 
         public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> queryFunc = null)
@@ -67,7 +67,7 @@ namespace Lochat.Infrastructure.BaseClasses
         public virtual TEntity GetById(string id)
         {
             var entity = GetQuery().FirstOrDefault(e => e.Id.Equals(id));
-            if (entity == null)
+            if (entity == default)
             {
                 throw new NotFoundException("Entity not found.");
             }

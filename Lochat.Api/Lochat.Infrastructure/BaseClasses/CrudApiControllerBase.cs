@@ -32,7 +32,7 @@ namespace Lochat.Infrastructure.BaseClasses
         [HttpDelete]
         public async Task Delete(TDto dto)
         {
-            _baseService.Delete(dto);
+            await _baseService.Delete(dto);
         }
 
         [HttpGet]
