@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import bpawl.lochat.LochatApplication;
 import bpawl.lochat.viewmodels.LochatViewModel;
+import bpawl.lochat.viewmodels.utils.IViewModelInitListener;
 
 public abstract class LochatFragment extends Fragment {
     protected LochatApplication _lochatApp;

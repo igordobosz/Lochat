@@ -1,96 +1,112 @@
 package bpawl.lochat.services;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
+import bpawl.lochat.api.IChatroomAPI;
+import bpawl.lochat.api.IRetrofitProvider;
+import bpawl.lochat.api.RequestModel.GetChatRoomByOwnerRequest;
 import bpawl.lochat.model.ChatRoom;
 import bpawl.lochat.model.Message;
-import bpawl.lochat.model.User;
+import bpawl.lochat.services.utils.IRequestFailedListener;
+import bpawl.lochat.services.utils.IRequestSuccessfulListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Singleton
 public class ChatManager implements IChatManager, IChatConnection {
-
-    private Collection<ChatRoom> _chatRooms;
+    private IUserManager _userManager;
+    private IChatroomAPI _chatroomAPI;
     private ChatRoom _connectedChat;
-    private User _user;
 
     @Inject
-    public ChatManager() {
-        // TODO: Use online service instead of the mocked data
-        Message message = new Message();
-        message.Id = "1";
-        message.CreationTime = LocalDateTime.now();
-        message.Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
-        ChatRoom first = new ChatRoom();
-        first.CreationTime = LocalDateTime.now();
-        first.Id = "1";
-        first.IsDynamic = false;
-        first.Latitude = 51.1000000;
-        first.Longitude = 17.0333300;
-        first.TerminationTime = LocalDateTime.now().plusHours(2);
-        first.Messages = new ArrayList(Arrays.asList(message, message, message));
-        first.Name = "First";
-
-        ChatRoom second = new ChatRoom();
-        second.CreationTime = LocalDateTime.now();
-        second.Id = "2";
-        second.IsDynamic = true;
-        second.Latitude = 51.1000002;
-        second.Longitude = 17.0333302;
-        second.TerminationTime = LocalDateTime.now().plusHours(6);
-        second.Messages = new ArrayList();
-        second.Name = "Second";
-
-        User user = new User();
-        user.Username = "placeholder";
-        user.Id = "0";
-        user.Chatrooms = new ArrayList(Arrays.asList(first, second));
-        _user = user;
-
-        message.Author = user;
-        message.Chatroom = first;
-
-        first.Owner = user;
-        second.Owner = user;
-
-        _chatRooms = user.Chatrooms;
+    public ChatManager(IRetrofitProvider provider, IUserManager userManager) {
+        _userManager = userManager;
+        _chatroomAPI = provider.getRetrofit().create(IChatroomAPI.class);
     }
 
     @Override
-    public Collection<ChatRoom> getUserCreated(String userID) {
-        if (userID == "0") {
-            return _chatRooms;
+    public void getUserCreated(IRequestSuccessfulListener<List<ChatRoom>> callback, IRequestFailedListener onFailed) {
+        if (_userManager.getAuthToken() == null) {
+            onFailed.onRequestFailed();
+        } else {
+            GetChatRoomByOwnerRequest request = new GetChatRoomByOwnerRequest();
+            request.ownerId = _userManager.getUser().Id;
+            _chatroomAPI.getChatRoomsByOwner(_userManager.getAuthToken(), request).enqueue(new Callback<List<ChatRoom>>() {
+                @Override
+                public void onResponse(Call<List<ChatRoom>> call, Response<List<ChatRoom>> response) {
+                    if (response.isSuccessful()) {
+                        callback.onRequestSuccessful(response.body());
+                    }
+                    else {
+                        onFailed.onRequestFailed();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<ChatRoom>> call, Throwable t) {
+                    onFailed.onRequestFailed();
+                }
+            });
         }
-        return null;
     }
 
     @Override
-    public boolean deleteChatRoom(String id) {
-        ChatRoom toDelete = _getChatBy(id);
-        if (toDelete != null) {
-            _chatRooms.remove(toDelete);
-            return true;
+    public void deleteChatRoom(ChatRoom toDelete, IRequestSuccessfulListener<Boolean> callback, IRequestFailedListener onFailed) {
+        if (_userManager.getAuthToken() == null) {
+            onFailed.onRequestFailed();
+        } else {
+            _chatroomAPI.deleteChatroom(_userManager.getAuthToken(), toDelete).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        callback.onRequestSuccessful(true);
+                    }
+                    else {
+                        onFailed.onRequestFailed();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    onFailed.onRequestFailed();
+                }
+            });
         }
-        return false;
     }
 
     @Override
-    public boolean createChatRoom(String name, int duration, int range) {
-        ChatRoom newChat = new ChatRoom();
-        newChat.Id = "100";
-        newChat.Messages = new ArrayList<>();
-        newChat.Owner = _user;
-        newChat.Name = name;
-        newChat.CreationTime = LocalDateTime.now();
-        newChat.TerminationTime = newChat.CreationTime.plusHours(duration);
-        _chatRooms.add(newChat);
-        return true;
+    public void createChatRoom(String name, int duration, int range, IRequestSuccessfulListener<ChatRoom> callback, IRequestFailedListener onFailed) {
+        if (_userManager.getAuthToken() == null) {
+            onFailed.onRequestFailed();
+        } else {
+            ChatRoom toCreate = new ChatRoom();
+            toCreate.OwnerId = _userManager.getUser().Id;
+            toCreate.Name = name;
+            toCreate.CreationTime = Instant.now();
+            toCreate.TerminationTime = toCreate.CreationTime.plusSeconds(duration * 3600);
+            toCreate.Latitude = 51.1000000;
+            toCreate.Longitude = 17.0333300;
+            _chatroomAPI.createChatroom(_userManager.getAuthToken(), toCreate).enqueue(new Callback<ChatRoom>() {
+                @Override
+                public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {
+                    if(response.isSuccessful()) {
+                        callback.onRequestSuccessful(response.body());
+                    }
+                    else  {
+                        onFailed.onRequestFailed();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ChatRoom> call, Throwable t) {
+                    onFailed.onRequestFailed();
+                }
+            });
+        }
     }
 
     @Override
@@ -101,6 +117,11 @@ public class ChatManager implements IChatManager, IChatConnection {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public ChatRoom getConnectedChat() {
+        return _connectedChat;
     }
 
     @Override
@@ -116,26 +137,12 @@ public class ChatManager implements IChatManager, IChatConnection {
         Message newMessage = new Message();
         newMessage.Text = text;
         newMessage.Id = "100";
-        newMessage.Author = _user;
-        newMessage.AuthorId = _user.Id;
+        //newMessage.AuthorId = _user.Id;
         newMessage.Chatroom = _connectedChat;
         newMessage.ChatroomId = _connectedChat.Id;
         newMessage.CreationTime = LocalDateTime.now();
-        _connectedChat.Messages.add(newMessage);
         return true;
     }
 
-    @Override
-    public ChatRoom getConnectedChat() {
-        return _connectedChat;
-    }
-
-    private ChatRoom _getChatBy(String chatID) {
-        for (ChatRoom chat : _chatRooms) {
-            if (chat.Id == chatID) {
-                return chat;
-            }
-        }
-        return null;
-    }
+    private ChatRoom _getChatBy(String chatID) { return null; }
 }

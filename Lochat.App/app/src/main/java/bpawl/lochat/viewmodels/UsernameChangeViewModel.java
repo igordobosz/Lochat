@@ -7,19 +7,19 @@ import androidx.lifecycle.Observer;
 
 import javax.inject.Inject;
 
+import bpawl.lochat.model.User;
 import bpawl.lochat.services.IFragmentNavigation;
 import bpawl.lochat.services.IUserManager;
-import bpawl.lochat.ui.Profile;
+import bpawl.lochat.services.utils.IRequestFailedListener;
+import bpawl.lochat.services.utils.IRequestSuccessfulListener;
 
-public class UsernameChangeViewModel extends LochatViewModel {
-
-    private static final String USERNAME_KEY = "user-name";
-
+public class UsernameChangeViewModel extends LochatViewModel implements IRequestSuccessfulListener<User>, IRequestFailedListener {
     private int _minUserNameLength = 3;
     private int _maxUserNameLength = 20;
 
 
     private MutableLiveData<String> _userName;
+    private MutableLiveData<Boolean> _isProcessing;
     private MediatorLiveData<Boolean> _hasUserNameInvalidCharacters;
     private MediatorLiveData<Boolean> _hasUserNameInvalidLength;
     private MediatorLiveData<Boolean> _isUserNameValid;
@@ -32,7 +32,8 @@ public class UsernameChangeViewModel extends LochatViewModel {
 
     @Override
     public void init() {
-        _userName = new MutableLiveData<String>(_getUserNameFromStorage());
+        _userName = new MutableLiveData<String>(userManager.getUser().Username);
+        _isProcessing = new MutableLiveData<Boolean>(false);
 
         _isUserNameValid = new MediatorLiveData<Boolean>();
         _isUserNameValid.addSource(_userName, new Observer<String>() {
@@ -58,11 +59,15 @@ public class UsernameChangeViewModel extends LochatViewModel {
             }
         });
 
-        userManager.signIn();
+        super.init();
     }
 
     public MutableLiveData<String> getUserName() {
         return _userName;
+    }
+
+    public LiveData<Boolean> getIsProcessing() {
+        return _isProcessing;
     }
 
     public LiveData<Boolean> getIsUserNameValid() {
@@ -87,14 +92,10 @@ public class UsernameChangeViewModel extends LochatViewModel {
 
     public void saveUsername() {
         if (_isUserNameValid.getValue()) {
-            _saveUserNameInStorage();
-            fragmentNavigation.back();
+            _isProcessing.setValue(true);
+            userManager.changeUsername(_userName.getValue(), this, this);
         }
     }
-
-    private String _getUserNameFromStorage() { return userManager.getUser().Username; }
-
-    private void _saveUserNameInStorage() { userManager.changeUsername(_userName.getValue()); }
 
     private boolean _hasInvalidCharacters(String s) {
         return !s.isEmpty() && !s.matches("^[a-zA-Z0-9]+$");
@@ -103,5 +104,16 @@ public class UsernameChangeViewModel extends LochatViewModel {
     private boolean _hasInvalidLength(String s) {
         int length = s.length();
         return length < _minUserNameLength || length > _maxUserNameLength;
+    }
+
+    @Override
+    public void onRequestFailed() {
+        _isProcessing.setValue(false);
+    }
+
+    @Override
+    public void onRequestSuccessful(User result) {
+        _isProcessing.setValue(false);
+        fragmentNavigation.back();
     }
 }
