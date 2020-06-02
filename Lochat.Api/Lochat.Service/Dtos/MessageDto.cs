@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Lochat.Infrastructure.BaseClasses;
+using Lochat.Infrastructure.Models;
 
 namespace Lochat.Service.Dtos
 {
@@ -12,5 +13,6 @@ namespace Lochat.Service.Dtos
         public string ChatroomId { get; set; }
         public string Text { get; set; }
         public DateTime CreationTime { get; set; }
+        public string AuthorName { get; set; }
     }
 }

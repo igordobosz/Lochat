@@ -49,9 +49,9 @@ namespace Lochat.Infrastructure.BaseClasses
 			return MapToDto(await _baseRepository.Update(MapToEntity(dto, oldEntity)));
 		}
 
-		public virtual async void Delete(TDto dto)
+		public virtual Task Delete(TDto dto)
 		{
-			await _baseRepository.Delete(MapToEntity(dto));
+			return _baseRepository.Delete(MapToEntity(dto));
 		}
 
 		public virtual TDto GetById(string id)
@@ -102,7 +102,7 @@ namespace Lochat.Infrastructure.BaseClasses
 
 		protected IEnumerable<TDto> MapToDtos(IEnumerable<TEntity> entities)
 		{
-			return _mapper.Map<IEnumerable<TDto>>(entities);
+			return _mapper.Map<IEnumerable<TDto>>(entities.ToList());
 		}
 
 		#endregion

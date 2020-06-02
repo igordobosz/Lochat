@@ -11,7 +11,8 @@ namespace Lochat.Service.Profiles
     {
         public MessageProfiles()
         {
-	        CreateMap<Message, MessageDto>();
+	        CreateMap<Message, MessageDto>()
+                .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => src.Author.Username));
             CreateMap<MessageDto, Message>();
         }
     }

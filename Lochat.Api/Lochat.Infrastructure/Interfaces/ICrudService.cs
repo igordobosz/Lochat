@@ -10,7 +10,7 @@ namespace Lochat.Infrastructure.Interfaces
     {
         Task<TDto> Create(TDto dto);
         Task<TDto> Update(TDto dto);
-        void Delete(TDto dto);
+        Task Delete(TDto dto);
         TDto GetById(string id);
         IEnumerable<TDto> Get(TQueryModel queryModel);
     }
