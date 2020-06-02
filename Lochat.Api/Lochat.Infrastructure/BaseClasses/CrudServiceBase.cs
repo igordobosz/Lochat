@@ -102,7 +102,7 @@ namespace Lochat.Infrastructure.BaseClasses
 
 		protected IEnumerable<TDto> MapToDtos(IEnumerable<TEntity> entities)
 		{
-			return _mapper.Map<IEnumerable<TDto>>(entities);
+			return _mapper.Map<IEnumerable<TDto>>(entities.ToList());
 		}
 
 		#endregion
