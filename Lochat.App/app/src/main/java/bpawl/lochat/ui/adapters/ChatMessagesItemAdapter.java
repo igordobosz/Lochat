@@ -6,15 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
+import java.util.Locale;
+
 import bpawl.lochat.R;
 import bpawl.lochat.model.Message;
 
 public class ChatMessagesItemAdapter extends ArrayAdapter<Message> {
     private Context _context;
     private List<Message> _messages;
+    DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+            .withLocale(Locale.UK)
+            .withZone(ZoneId.systemDefault());
 
     public ChatMessagesItemAdapter(@NonNull Context context, @NonNull List<Message> objects) {
         super(context, 0, objects);
@@ -32,10 +42,10 @@ public class ChatMessagesItemAdapter extends ArrayAdapter<Message> {
         Message current = _messages.get(position);
 
         TextView messageAuthor = (TextView) listItem.findViewById(R.id.messageAuthor);
-        messageAuthor.setText(current.Author.Username);
+        messageAuthor.setText(current.AuthorName);
 
         TextView messageTime = (TextView) listItem.findViewById(R.id.messageDateTime);
-        messageTime.setText(current.CreationTime.toString());
+        messageTime.setText(formatter.format(current.CreationTime));
 
         TextView messageContent = (TextView) listItem.findViewById(R.id.messageContent);
         messageContent.setText(current.Text);

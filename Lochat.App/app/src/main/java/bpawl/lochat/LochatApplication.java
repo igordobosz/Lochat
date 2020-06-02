@@ -4,7 +4,6 @@ import android.app.Application;
 
 import javax.inject.Inject;
 
-import bpawl.lochat.di.AndroidToolsModule;
 import bpawl.lochat.di.AppComponent;
 import bpawl.lochat.di.DaggerAppComponent;
 import bpawl.lochat.services.IUserManager;
@@ -22,9 +21,7 @@ public class LochatApplication extends Application {
     }
 
     private void _setupDependencyInjection() {
-        appComponent = DaggerAppComponent.builder()
-                .androidToolsModule(new AndroidToolsModule(this))
-                .build();
+        appComponent = DaggerAppComponent.builder().build();
         appComponent.inject(this);
     }
 }

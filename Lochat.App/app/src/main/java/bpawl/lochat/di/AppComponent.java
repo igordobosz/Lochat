@@ -14,7 +14,7 @@ import bpawl.lochat.viewmodels.UsernameChangeViewModel;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {AndroidToolsModule.class, ServicesModule.class})
+@Component(modules = {ServicesModule.class})
 public interface AppComponent {
     void inject(LochatApplication application);
     void inject(LochatActivity lochatActivity);

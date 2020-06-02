@@ -52,15 +52,13 @@
                 </LinearLayout>
 
                 <Button
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
                     android:background="@color/colorAccent"
                     android:text="Usuń"
                     android:onClick="@{() -> viewModel.deleteChatRoom()}"
                     android:textColor="@color/textColorPrimary"
-                    android:visibility="visible" />
-
+                    android:visibility="@{viewModel.canDelete ? View.VISIBLE : View.GONE}" />
             </LinearLayout>
 
             <View
@@ -78,7 +76,21 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="20dp"
             android:transcriptMode="alwaysScroll"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:visibility="@{viewModel.isProcessing ? View.GONE : View.VISIBLE}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="@{viewModel.isProcessing ? View.VISIBLE : View.GONE}" >
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

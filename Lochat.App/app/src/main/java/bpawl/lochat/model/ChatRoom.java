@@ -2,8 +2,10 @@ package bpawl.lochat.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Collection;
 
 public class ChatRoom {
@@ -23,6 +25,10 @@ public class ChatRoom {
     public double Longitude;
 
     public String getRemainingTimeString() {
-        return "55 min";
+        Duration duration = Duration.between(Instant.now(), TerminationTime);
+        if(duration.toHours() <= 0) {
+            return Long.toString(duration.toMinutes()) + " minut(y)";
+        }
+        return Long.toString(duration.toHours()) + " godzin(y)";
     }
 }

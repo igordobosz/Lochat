@@ -9,10 +9,6 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
 
 public class InstantAdapter implements JsonSerializer<Instant>, JsonDeserializer<Instant> {
     @Override
@@ -22,9 +18,11 @@ public class InstantAdapter implements JsonSerializer<Instant>, JsonDeserializer
 
     @Override
     public Instant deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        LocalDateTime ldt = LocalDateTime.parse(json.getAsJsonPrimitive().getAsString().substring(0,23));
-        ZoneId zoneId = ZoneId.of( "America/Montreal" );
-        ZonedDateTime zdt = ldt.atZone(zoneId);
-        return zdt.toInstant();
+        String asString = json.getAsJsonPrimitive().getAsString();
+        if(asString.charAt(asString.length() - 1) != 'Z') {
+            asString = asString.concat("Z");
+        }
+        Instant time = Instant.parse(asString);
+        return time;
     }
 }

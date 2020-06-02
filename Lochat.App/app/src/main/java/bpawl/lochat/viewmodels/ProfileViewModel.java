@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import bpawl.lochat.model.ChatRoom;
@@ -92,8 +92,11 @@ public class ProfileViewModel extends LochatViewModel {
         }
     }
 
-    public void selectChatRoom(String id) {
-        if (chatConnection.connectToChat(id)) {
+    public void connectToChatRoom(String id) {
+        Optional<ChatRoom> toConnectOpt = _chatRooms.getValue().stream().filter(chatRoom -> id.equals(chatRoom.Id)).findFirst();
+        if(toConnectOpt.isPresent()) {
+            ChatRoom toConnect = toConnectOpt.get();
+            chatConnection.connectToChat(toConnect);
             fragmentNavigation.navigateToFragment(bpawl.lochat.ui.ChatRoom.class.getName());
         }
     }

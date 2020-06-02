@@ -1,7 +1,6 @@
 package bpawl.lochat.services;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,7 +8,6 @@ import bpawl.lochat.api.IChatroomAPI;
 import bpawl.lochat.api.IRetrofitProvider;
 import bpawl.lochat.api.RequestModel.GetChatRoomByOwnerRequest;
 import bpawl.lochat.model.ChatRoom;
-import bpawl.lochat.model.Message;
 import bpawl.lochat.services.utils.IRequestFailedListener;
 import bpawl.lochat.services.utils.IRequestSuccessfulListener;
 import retrofit2.Call;
@@ -17,10 +15,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @Singleton
-public class ChatManager implements IChatManager, IChatConnection {
+public class ChatManager implements IChatManager {
     private IUserManager _userManager;
     private IChatroomAPI _chatroomAPI;
-    private ChatRoom _connectedChat;
 
     @Inject
     public ChatManager(IRetrofitProvider provider, IUserManager userManager) {
@@ -29,12 +26,17 @@ public class ChatManager implements IChatManager, IChatConnection {
     }
 
     @Override
+    public void getNearbyChatRooms(IRequestSuccessfulListener<List<ChatRoom>> callback, IRequestFailedListener onFailed) {
+
+    }
+
+    @Override
     public void getUserCreated(IRequestSuccessfulListener<List<ChatRoom>> callback, IRequestFailedListener onFailed) {
         if (_userManager.getAuthToken() == null) {
             onFailed.onRequestFailed();
         } else {
             GetChatRoomByOwnerRequest request = new GetChatRoomByOwnerRequest();
-            request.ownerId = _userManager.getUser().Id;
+            request.ownerId = "b36aae58-1afb-4b51-881d-053fc137517d";//_userManager.getUser().Id;
             _chatroomAPI.getChatRoomsByOwner(_userManager.getAuthToken(), request).enqueue(new Callback<List<ChatRoom>>() {
                 @Override
                 public void onResponse(Call<List<ChatRoom>> call, Response<List<ChatRoom>> response) {
@@ -108,41 +110,4 @@ public class ChatManager implements IChatManager, IChatConnection {
             });
         }
     }
-
-    @Override
-    public boolean connectToChat(String chatID) {
-        ChatRoom toConnect = _getChatBy(chatID);
-        if (toConnect != null) {
-            _connectedChat = toConnect;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public ChatRoom getConnectedChat() {
-        return _connectedChat;
-    }
-
-    @Override
-    public boolean disconnectFromChat() {
-        if (_connectedChat != null) {
-            _connectedChat = null;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean sendMessage(String text) {
-        Message newMessage = new Message();
-        newMessage.Text = text;
-        newMessage.Id = "100";
-        //newMessage.AuthorId = _user.Id;
-        newMessage.Chatroom = _connectedChat;
-        newMessage.ChatroomId = _connectedChat.Id;
-        newMessage.CreationTime = LocalDateTime.now();
-        return true;
-    }
-
-    private ChatRoom _getChatBy(String chatID) { return null; }
 }

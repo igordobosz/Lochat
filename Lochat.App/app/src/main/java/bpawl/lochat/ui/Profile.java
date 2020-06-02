@@ -51,7 +51,7 @@ public class Profile extends LochatFragment implements IDeleteChatRoomListener, 
         _userChatRooms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                _viewModel.selectChatRoom(_chatRooms.get(position).Id);
+                _viewModel.connectToChatRoom(_chatRooms.get(position).Id);
             }
         });
 

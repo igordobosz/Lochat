@@ -6,23 +6,25 @@ import bpawl.lochat.api.LochatAPIRetrofitProvider;
 import bpawl.lochat.api.GoogleConnection;
 import bpawl.lochat.api.IGoogleConnection;
 import bpawl.lochat.api.IRetrofitProvider;
+import bpawl.lochat.services.ChatConnection;
 import bpawl.lochat.services.ChatManager;
 import bpawl.lochat.services.FragmentNavigation;
 import bpawl.lochat.services.IChatConnection;
 import bpawl.lochat.services.IChatManager;
 import bpawl.lochat.services.IFragmentNavigation;
+import bpawl.lochat.services.ILocationService;
 import bpawl.lochat.services.IUserManager;
+import bpawl.lochat.services.LocationService;
 import bpawl.lochat.services.UserManager;
 import bpawl.lochat.ui.ChatMap;
 import bpawl.lochat.ui.ChatRoomCreation;
 import bpawl.lochat.ui.Profile;
 import bpawl.lochat.ui.Signing;
 import bpawl.lochat.ui.UsernameChange;
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = ServicesModule.BindsModule.class)
+@Module
 public class ServicesModule {
     @Provides
     @Singleton
@@ -44,13 +46,15 @@ public class ServicesModule {
     @Singleton
     public IUserManager provideUserManager(IRetrofitProvider provider, IGoogleConnection googleConnection) { return new UserManager(provider, googleConnection); }
 
-    // interface with @Binds
-    @Module
-    public interface BindsModule {
-        @Binds
-        IChatManager provideChatManager(ChatManager chatManager);
+    @Provides
+    @Singleton
+    public IChatManager provideChatManager(IRetrofitProvider provider, IUserManager userManager) { return new ChatManager(provider, userManager); }
 
-        @Binds
-        IChatConnection provideChatConnection(ChatManager chatManager);
-    }
+    @Provides
+    @Singleton
+    public IChatConnection provideChatConnection(IRetrofitProvider provider, IUserManager userManager) { return new ChatConnection(provider, userManager); }
+
+    @Provides
+    @Singleton
+    public ILocationService provideLocationService() { return new LocationService(); }
 }
