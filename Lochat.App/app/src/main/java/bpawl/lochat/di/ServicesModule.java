@@ -48,7 +48,7 @@ public class ServicesModule {
 
     @Provides
     @Singleton
-    public IChatManager provideChatManager(IRetrofitProvider provider, IUserManager userManager) { return new ChatManager(provider, userManager); }
+    public IChatManager provideChatManager(IRetrofitProvider provider, IUserManager userManager, ILocationService locationService) { return new ChatManager(provider, userManager, locationService); }
 
     @Provides
     @Singleton

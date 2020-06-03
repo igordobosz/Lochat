@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import bpawl.lochat.api.IChatroomAPI;
 import bpawl.lochat.api.IRetrofitProvider;
+import bpawl.lochat.api.RequestModel.GetChatRoomByLocationRequest;
 import bpawl.lochat.api.RequestModel.GetChatRoomByOwnerRequest;
 import bpawl.lochat.model.ChatRoom;
 import bpawl.lochat.services.utils.IRequestFailedListener;
@@ -17,17 +18,41 @@ import retrofit2.Response;
 @Singleton
 public class ChatManager implements IChatManager {
     private IUserManager _userManager;
+    private ILocationService _locationService;
     private IChatroomAPI _chatroomAPI;
 
     @Inject
-    public ChatManager(IRetrofitProvider provider, IUserManager userManager) {
+    public ChatManager(IRetrofitProvider provider, IUserManager userManager, ILocationService locationService) {
         _userManager = userManager;
+        _locationService = locationService;
         _chatroomAPI = provider.getRetrofit().create(IChatroomAPI.class);
     }
 
     @Override
     public void getNearbyChatRooms(IRequestSuccessfulListener<List<ChatRoom>> callback, IRequestFailedListener onFailed) {
+        if (_userManager.getAuthToken() == null) {
+            onFailed.onRequestFailed();
+        } else {
+            GetChatRoomByLocationRequest request = new GetChatRoomByLocationRequest();
+            request.latitude = _locationService.getLatitude();
+            request.longitude = _locationService.getLongitude();
+            _chatroomAPI.getChatRoomsByLocation(_userManager.getAuthToken(), request).enqueue(new Callback<List<ChatRoom>>() {
+                @Override
+                public void onResponse(Call<List<ChatRoom>> call, Response<List<ChatRoom>> response) {
+                    if (response.isSuccessful()) {
+                        callback.onRequestSuccessful(response.body());
+                    }
+                    else {
+                        onFailed.onRequestFailed();
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<List<ChatRoom>> call, Throwable t) {
+                    onFailed.onRequestFailed();
+                }
+            });
+        }
     }
 
     @Override
@@ -36,7 +61,7 @@ public class ChatManager implements IChatManager {
             onFailed.onRequestFailed();
         } else {
             GetChatRoomByOwnerRequest request = new GetChatRoomByOwnerRequest();
-            request.ownerId = "b36aae58-1afb-4b51-881d-053fc137517d";//_userManager.getUser().Id;
+            request.ownerId = _userManager.getUser().Id;
             _chatroomAPI.getChatRoomsByOwner(_userManager.getAuthToken(), request).enqueue(new Callback<List<ChatRoom>>() {
                 @Override
                 public void onResponse(Call<List<ChatRoom>> call, Response<List<ChatRoom>> response) {
@@ -90,8 +115,9 @@ public class ChatManager implements IChatManager {
             toCreate.Name = name;
             toCreate.CreationTime = Instant.now();
             toCreate.TerminationTime = toCreate.CreationTime.plusSeconds(duration * 3600);
-            toCreate.Latitude = 51.1000000;
-            toCreate.Longitude = 17.0333300;
+            toCreate.Range = range;
+            toCreate.Latitude = _locationService.getLatitude();
+            toCreate.Longitude = _locationService.getLongitude();
             _chatroomAPI.createChatroom(_userManager.getAuthToken(), toCreate).enqueue(new Callback<ChatRoom>() {
                 @Override
                 public void onResponse(Call<ChatRoom> call, Response<ChatRoom> response) {

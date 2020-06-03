@@ -23,6 +23,8 @@ public class ChatRoom {
     public double Latitude;
     @SerializedName("longitude")
     public double Longitude;
+    @SerializedName("rangeInKilometers")
+    public int Range;
 
     public String getRemainingTimeString() {
         Duration duration = Duration.between(Instant.now(), TerminationTime);
